@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="cn" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.12参与完善Proxmox VE文档 &mdash; Promxox VE 中文文档 7.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="第二章 Proxmox VE安装" href="../install/index.html" />
+    <link rel="prev" title="1.11项目历程" href="history.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Promxox VE 中文文档
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第一章 介绍</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="centermgr.html">1.1 集中管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storagetype.html">1.2 支持多种存储类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vmbackupandretore.html">1.3 虚拟机备份和恢复</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HAcluster.html">1.4高可用集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networkemu.html">1.5支持多种虚拟网络技术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">1.6内嵌防火墙</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one.html">1.7 超融合基础设施</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opensoure.html">1.8 开源的原因</a></li>
+<li class="toctree-l2"><a class="reference internal" href="youshi.html">1.9 Proxmox VE的优势</a></li>
+<li class="toctree-l2"><a class="reference internal" href="support.html">1.10 获取支持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="history.html">1.11项目历程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.12参与完善Proxmox VE文档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">第二章 Proxmox VE安装</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Promxox VE 中文文档</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">第一章 介绍</a> &raquo;</li>
+      <li>1.12参与完善Proxmox VE文档</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/introduce/doc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="proxmox-ve">
+<h1>1.12参与完善Proxmox VE文档<a class="headerlink" href="#proxmox-ve" title="Permalink to this headline"></a></h1>
+<p>根据你想要改进的内容主题，可以用不同的方式提交给Proxmox VE开发人员。</p>
+<p>如果你想修正当前文档中的错误，可以使用Proxmox bug tracker提交更正后的文档。</p>
+<p>如果你想增加新的内容主题，则取决于你希望增加的文档内容类型：</p>
+<ul class="simple">
+<li><p>如果想增加的内容仅限于你自己的部署环境，那么添加到wiki上是最合适的。例如，你想增加的内容是关于特定虚拟机的配置信息，比如是针对一个冷门操作系统的最佳Qemu驱动组合，那么就非常适合用wiki文章的形式来记录。</p></li>
+<li><p>如果想增加的内容是关于一般性问题，并且对所有用户都会有帮助，你可以尝试添加到参考文档。参考文档使用asciidoc文档格式编写。你可以先克隆参考文档代码仓库git://git.proxmox.com/git/pve-docs.git，然后按照README.adoc中的指示来编写新的内容。</p></li>
+</ul>
+<p>参与完善Proxmox VE文档就和在Wikipedia上写文章一样简单，并且也是参与大型开源软件项目的一种有趣的尝试。</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="history.html" class="btn btn-neutral float-left" title="1.11项目历程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../install/index.html" class="btn btn-neutral float-right" title="第二章 Proxmox VE安装" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, bingsin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="cn" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.11项目历程 &mdash; Promxox VE 中文文档 7.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1.12参与完善Proxmox VE文档" href="doc.html" />
+    <link rel="prev" title="1.10 获取支持" href="support.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Promxox VE 中文文档
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第一章 介绍</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="centermgr.html">1.1 集中管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storagetype.html">1.2 支持多种存储类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vmbackupandretore.html">1.3 虚拟机备份和恢复</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HAcluster.html">1.4高可用集群</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networkemu.html">1.5支持多种虚拟网络技术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">1.6内嵌防火墙</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one.html">1.7 超融合基础设施</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opensoure.html">1.8 开源的原因</a></li>
+<li class="toctree-l2"><a class="reference internal" href="youshi.html">1.9 Proxmox VE的优势</a></li>
+<li class="toctree-l2"><a class="reference internal" href="support.html">1.10 获取支持</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.11项目历程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.html">1.12参与完善Proxmox VE文档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">第二章 Proxmox VE安装</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Promxox VE 中文文档</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">第一章 介绍</a> &raquo;</li>
+      <li>1.11项目历程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/introduce/history.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>1.11项目历程<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h1>
+<p>Proxmox VE项目始于2007年，并在2008年发布了第一个stable版本。当时我们采用了OpenVZ容器技术和KVM虚拟机技术。但集群功能十分有限，用户界面也很简陋（页面由服务器生成）。</p>
+<p>但我们很快用Corosync集群组件开发了新的集群功能，并通过引入新的Proxmox集群文件系统（pmxcfs）很好地对用户屏蔽了集群的复杂性。这是一个很大的进步。用户管理一个有16个节点的集群就和管理一个单机系统一样简单。</p>
+<p>我们还引入了新的REST API，并用JSON定义了所有的API。借助REST API，第三方不仅可以将Proxmox VE集成到他们现有的IT基础设施中，并且可以很容易地开发新的服务。</p>
+<p>此外，利用新的REST API，我们用基于Javascript的HTML5应用替换了原有的用户界面。我们还用noVNC替换了原来基于Java的VNC控制台组件。现在你只需要通过浏览器就可以直接访问虚拟机桌面。</p>
+<p>支持不同类型的存储技术是Proxmox VE另一个重要特性。其中值得一提的是，在2014年Proxmox VE就默认支持ZFS，这在Linux发行版中是第一个。另一个重要的里程碑是在Proxmox VE服务器上运行Ceph存储服务，从而提供了一种性价比极高的部署方式。</p>
+<p>我们是最早提供KVM虚拟机商业软件技术服务的公司之一。KVM技术本身在不断演进，目前已经是被广泛使用的虚拟机技术，而且随着每个新版本发布都会有新功能推出。我们开发了KVM虚拟机在线备份功能，从而可以对保存在任何存储设备上的KVM虚拟机进行快照式备份。</p>
+<p>Proxmox VE 4.0的一个重大变化就是舍弃了OpenVZ容器并转向了LXC容器技术。目前容器技术已经深度整合到了Proxmox VE当中，并且可以和虚拟机在同一个存储和网络环境中同时使用。</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="support.html" class="btn btn-neutral float-left" title="1.10 获取支持" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.html" class="btn btn-neutral float-right" title="1.12参与完善Proxmox VE文档" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, bingsin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

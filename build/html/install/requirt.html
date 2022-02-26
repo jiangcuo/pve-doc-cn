@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="cn" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1系统安装需求 &mdash; Promxox VE 中文文档 7.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="第二章 Proxmox VE安装" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Promxox VE 中文文档
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduce/index.html">第一章 介绍</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第二章 Proxmox VE安装</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1系统安装需求</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.1.1最小硬件配置，适用于测试评估场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.1.2推荐系统硬件配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.1.3性能概览</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web">2.1.4 Web管理界面支持的浏览器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Promxox VE 中文文档</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">第二章 Proxmox VE安装</a> &raquo;</li>
+      <li>2.1系统安装需求</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/install/requirt.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>2.1系统安装需求<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h1>
+<p>对于生产用Proxmox VE服务器，建议为服务器配置较好的硬件。时刻牢记，如果你在一台服务器上运行了10台虚拟机，那么一旦服务器硬件故障，那么这10台虚拟机就会全部当机。Proxmox VE支持集群式部署，而利用内嵌的集群功能，可以实现对多台服务器的集中管理。</p>
+<p>Proxmox VE支持服务器本地磁盘（DAS），SAN，NAS和分布式存储（Ceph DRBD）等多种虚拟机镜像存储技术。具体可详见第8章“Proxmox VE存储”。</p>
+<section id="id2">
+<h2>2.1.1最小硬件配置，适用于测试评估场景<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>CPU要求为Intel EMT64或AMD64，需要支持Intel VT/AMD-V虚拟化。</p></li>
+<li><p>内存不低于2GB，以确保操作系统和Proxmox VE服务正常运行。如需运行虚拟机，需相应增加更多内存。如需运行Ceph或ZFS，还需要增配内存，大概1TB存储空间增加1GB内存。</p></li>
+<li><p>高性能高冗余存储资源，最好使用SSD盘。</p></li>
+<li><p>操作系统盘：带有电池保护缓存的硬RAID卡，没有硬RAID卡时可以使用带有SSD缓存的ZFS。</p></li>
+<li><p>虚拟机存储：本地磁盘可以采用带有电池保护缓存的硬RAID卡，或不带硬RAID卡的ZFS。ZFS和Ceph都不能和硬RAID控制器同时使用。也可以共享分布式存储。</p></li>
+<li><p>多块千兆网卡。根据所用存储技术和集群配置，可以选配更多网卡。也可使用10Gbit或更高速网卡。</p></li>
+<li><p>如需使用PCI直通，必须采用支持VT-d/AMD-d的CPU。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>2.1.2推荐系统硬件配置<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>CPU：64位（Intel EMT64或AMD64），推荐使用多核CPU</p></li>
+<li><p>CPU和主板需要支持Intel VT/AMD-V技术，以便支持KVM全虚拟化功能</p></li>
+<li><p>内存：8GB，如果要运行虚拟机则应配置更多</p></li>
+<li><p>硬RAID卡，带有电池保护（BBU）或闪存保护的写缓存</p></li>
+<li><p>高性能硬盘，最好是15k转速的SAS盘，配置成Raid10</p></li>
+<li><p>最少2块以太网卡，也根据采用的共享存储技术配置更多网卡</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>2.1.3性能概览<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
+<p>Proxmox VE安装完成后，你可以运行pveperf命令查看CPU和硬盘性能概要。</p>
+<p><strong>注意</strong>
+这仅仅是一个非常便捷且粗略的性能指标。建议你进行更多的性能测试，特别是在需要了解系统I/O性能指标时。</p>
+</section>
+<section id="web">
+<h2>2.1.4 Web管理界面支持的浏览器<a class="headerlink" href="#web" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Firefox，当年发行的版本，或最新的扩展支持版本</p></li>
+<li><p>Chrome，当年发行的版本</p></li>
+<li><p>微软目前支持的Internet Explorer版本（在2019年，指IE11或IE Edge）</p></li>
+<li><p>Safari，当前发布版本</p></li>
+</ul>
+<p>如果Proxmox VE检测到你在使用移动终端访问，则会跳转到轻量级的专为触摸屏设计的管理界面。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="第二章 Proxmox VE安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, bingsin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

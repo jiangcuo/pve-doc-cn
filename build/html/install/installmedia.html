@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="cn" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.2使用安装介质 &mdash; Promxox VE 中文文档 7.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2.1系统安装需求" href="requirt.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Promxox VE 中文文档
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduce/index.html">第一章 介绍</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第二章 Proxmox VE安装</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="requirt.html">2.1系统安装需求</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2使用安装介质</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#u">2.2.1 使用一个U盘作为安装介质</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gnu-linux">2.2.2 GNU/Linux下的制作过程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#osx">2.2.3 OSX下的制作过程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windows">2.2.4 Windows下的制作过程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#etcher">使用Etcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rufus">使用Rufus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Promxox VE 中文文档</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">第二章 Proxmox VE安装</a> &raquo;</li>
+      <li>2.2使用安装介质</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/install/installmedia.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>2.2使用安装介质<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h1>
+<p>可以从http://www.proxmox.com/en/downloads/category/iso-images-pve下载ISO镜像。</p>
+<p>目前官方提供的Proxmox VE安装介质是一种混合型的ISO镜像。有两种使用方法：
+- 将ISO镜像烧录到CD上使用
+- 将裸区块镜像（IMG）文件直接复制到闪存介质上（USB盘）</p>
+<p>用U盘安装Proxmox VE不仅速度快而且更加方便，也是推荐使用的安装方式。</p>
+<section id="u">
+<h2>2.2.1 使用一个U盘作为安装介质<a class="headerlink" href="#u" title="Permalink to this headline"></a></h2>
+<p>U盘需要至少有1 GB的可用存储。</p>
+<p><strong>注意</strong>
+不要用UNetbootin或Rufus。</p>
+<p><strong>重要</strong>
+请确保U盘没有被挂载，并且没有任何重要数据。</p>
+</section>
+<section id="gnu-linux">
+<h2>2.2.2 GNU/Linux下的制作过程<a class="headerlink" href="#gnu-linux" title="Permalink to this headline"></a></h2>
+<p>你可以直接用dd命令制作U盘镜像。首先下载ISO镜像，然后将U盘插入计算机。找出U盘的设备名，然后运行如下命令：</p>
+<p><code class="docutils literal notranslate"><span class="pre">dd</span> <span class="pre">if=proxmox-ve_*</span> <span class="pre">.iso</span> <span class="pre">of=/dev/XYZ</span> <span class="pre">bs=1M</span></code></p>
+<p><strong>注意</strong>
+请用正确的设备名替换上面命令中的/dev/XZY。</p>
+<p><strong>警告</strong>
+请务必小心，不要把硬盘数据覆盖掉！</p>
+<p>如何找到U盘的设备名</p>
+<p>你可以比较U盘插入计算机前后dmesg命令输出的最后一行内容，也可以用lsblk。</p>
+<p>打开命令行终端，运行命令</p>
+<p><code class="docutils literal notranslate"><span class="pre">lsblk</span></code></p>
+<p>然后将U盘插入计算机，再次运行命令</p>
+<p><code class="docutils literal notranslate"><span class="pre">lsblk</span></code></p>
+<p>你会发现有新的设备，这个新设备就是你所要操作的U盘。</p>
+</section>
+<section id="osx">
+<h2>2.2.3 OSX下的制作过程<a class="headerlink" href="#osx" title="Permalink to this headline"></a></h2>
+<p>打开命令行终端（在Spotlight中query Terminal）。</p>
+<p>用hdiutil的convert选项将.iso文件转换为.img格式，示例如下。</p>
+<p><code class="docutils literal notranslate"><span class="pre">hdiutil</span> <span class="pre">convert</span>&#160; <span class="pre">-format</span>&#160; <span class="pre">UDRW</span>&#160; <span class="pre">-o</span>&#160; <span class="pre">proxmox-ve_*.dmg</span>&#160; <span class="pre">proxmox-ve_*.iso</span></code></p>
+<p><strong>提示</strong>
+OS X倾向于自动为输出文件增加.dmg后缀名。</p>
+<p>运行命令获取当前设备列表：</p>
+<p><code class="docutils literal notranslate"><span class="pre">diskutil</span> <span class="pre">list</span></code></p>
+<p>然后将U盘插入计算机，再次运行命令，获取分配给U盘的设备节点名称（例如 /dev/diskX）。
+<code class="docutils literal notranslate"><span class="pre">diskutil</span> <span class="pre">list</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">diskutil</span> <span class="pre">unmountDisk</span> <span class="pre">/dev/diskX</span></code></p>
+<p><strong>注意</strong>
+用前面命令中返回的设备序号替换X。</p>
+<p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">dd</span> <span class="pre">if=proxmox-ve_*.dmg</span> <span class="pre">of=/dev/rdiskX</span> <span class="pre">bs=1m</span></code></p>
+<p><strong>注意</strong>
+前面命令使用了rdiskX而不是diskX，这可以提高写入速度。</p>
+</section>
+<section id="windows">
+<h2>2.2.4 Windows下的制作过程<a class="headerlink" href="#windows" title="Permalink to this headline"></a></h2>
+<section id="etcher">
+<h3>使用Etcher<a class="headerlink" href="#etcher" title="Permalink to this headline"></a></h3>
+<p>从https://etcher.io下载Etcher，选择ISO和你的U盘。</p>
+<p>如不成功，可改用OSForenics USB installer，下载地址为http://www.osforensics.org/portability.html</p>
+</section>
+<section id="rufus">
+<h3>使用Rufus<a class="headerlink" href="#rufus" title="Permalink to this headline"></a></h3>
+<p>Rufus是一个更轻量级的替代方案，但您需要使用DD模式才能使其工作。从https://rufus.ie/下载Rufus。要么直接安装，要么使用便携版本。选择目标驱动器和Proxmox VE ISO文件。</p>
+<p><strong>重要</strong>
+启动后，您必须在要求下载不同版本的GRUB的对话框中单击否。在下一个对话框中，选择DD模式。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="requirt.html" class="btn btn-neutral float-left" title="2.1系统安装需求" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, bingsin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
