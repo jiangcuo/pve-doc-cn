@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="cn" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.1软件源 &mdash; Promxox VE 中文文档 7.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="第三章 系统管理" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Promxox VE 中文文档
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduce/index.html">第一章 介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">第二章 Proxmox VE安装</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第三章 系统管理</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.1软件源</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#proxmox-ve">3.1.1. Proxmox VE的软件仓库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">软件仓库管理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sources-list">Sources.list</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pproxmox-ve">3.1.2. PProxmox VE企业版软件源</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.1.3. Proxmox VE 无订阅储存库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.1.4. Proxmox VE 测试存储库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ceph">3.1.5. Ceph 太平洋仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ceph-pacific">3.1.6. Ceph Pacific 测试仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ceph-octopus">3.1.7. Ceph Octopus仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.1.8. Ceph Octopus测试仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.1.9. 安全安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Promxox VE 中文文档</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">第三章 系统管理</a> &raquo;</li>
+      <li>3.1软件源</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/hostsysmgr/aptsource.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>3.1软件源<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h1>
+<p>Proxmox VE像其他debian发行版一样，使用APT作为软件包管理器。</p>
+<section id="proxmox-ve">
+<h2>3.1.1. Proxmox VE的软件仓库<a class="headerlink" href="#proxmox-ve" title="Permalink to this headline"></a></h2>
+<p>软件仓库收集了大量的软件，他们可以用来安装新程序或者更新旧程序。</p>
+<p><em>注意</em>  需要有效的Debian和Proxmox仓库才能获得安全更新、bug修复程序和新功能</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list</span></code>文件和<code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/</span></code>目录下的<code class="docutils literal notranslate"><span class="pre">.list</span></code>文件，定义了软件仓库源列表。</p>
+<section id="id2">
+<h3>软件仓库管理<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<p>从Proxmox VE 7.0以来，用户可以在网页上检查仓库状态。在节点摘要面板显示一个高级的状态视图，而<code class="docutils literal notranslate"><span class="pre">仓库</span></code>选项中可以看到更加详细的软件源列表、配置和状态。
+这里仅是基础的软件仓库管理，比如启用和禁用软件仓库。</p>
+</section>
+<section id="sources-list">
+<h3>Sources.list<a class="headerlink" href="#sources-list" title="Permalink to this headline"></a></h3>
+<p>软件源文件sources.list的每一行定义了一个软件源，最常用的软件源一般放在前面。在sources.list中，空行会被忽略，字符#及以后的内容会被解析为注释。可以用apt-get update命令获取软件源中的软件包信息。可以通过命令<code class="docutils literal notranslate"><span class="pre">apt-get</span></code>获取更新或者在GUI面板上点击<code class="docutils literal notranslate"><span class="pre">节点</span></code>——<code class="docutils literal notranslate"><span class="pre">更新</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list</span></code>文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span> <span class="n">bullseye</span> <span class="n">main</span> <span class="n">contrib</span>
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span> <span class="n">bullseye</span><span class="o">-</span><span class="n">updates</span> <span class="n">main</span> <span class="n">contrib</span>
+
+<span class="c1"># security updates</span>
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">security</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span><span class="o">-</span><span class="n">security</span> <span class="n">bullseye</span><span class="o">-</span><span class="n">security</span> <span class="n">main</span> <span class="n">contrib</span>
+</pre></div>
+</div>
+<p>Proxmox VE提供了3个不同的软件仓库。</p>
+</section>
+</section>
+<section id="pproxmox-ve">
+<h2>3.1.2. PProxmox VE企业版软件源<a class="headerlink" href="#pproxmox-ve" title="Permalink to this headline"></a></h2>
+<p>Proxmox VE企业版软件源是默认的、稳定的、推荐使用的软件源，供订阅了Proxmox VE企业版的用户使用。该软件源包含了最稳定的软件包，适用于生产环境使用。软件源pve-enterprise默认是启用的。</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/pve-enterprise.list</span></code>文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">enterprise</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">pve</span> <span class="n">bullseye</span> <span class="n">pve</span><span class="o">-</span><span class="n">enterprise</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">root&#64;pam</span></code>用户将通过电子邮件收到有关可用更新的通知。单击 GUI 中的&quot;更改日志&quot;按钮可查看有关所选更新的更多详细信息。</p>
+<p>请注意，你必须提供订阅密钥才可以访问企业版软件源。我们提供有不同级别的订阅服务，具体信息可以查看网址https://www.proxmox.com/en/proxmox-ve/pricing。</p>
+<p><strong>注意</strong> 您可以通过使用 # 注释掉上面的行（在行首）来禁用此存储库。这可以防止在没有订阅密钥时出现错误消息。在这种情况下，请配置 pve-no-subscription 存储库。</p>
+</section>
+<section id="id3">
+<h2>3.1.3. Proxmox VE 无订阅储存库<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<p>这是推荐用于测试和非生产用途的存储库。它的软件包没有经过严格的测试和验证。您不需要订阅密钥即可访问 pve-no-subscription 存储库。</p>
+<p>我们建议在 /etc/apt/sources.list 中配置此存储库。</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list</span></code> 文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span> <span class="n">bullseye</span> <span class="n">main</span> <span class="n">contrib</span>
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span> <span class="n">bullseye</span><span class="o">-</span><span class="n">updates</span> <span class="n">main</span> <span class="n">contrib</span>
+
+<span class="c1"># Proxmox VE 无订阅储存库由proxmox.com提供,</span>
+<span class="c1"># 不建议在生产环境中使用</span>
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">pve</span> <span class="n">bullseye</span> <span class="n">pve</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">subscription</span>
+
+<span class="c1"># security updates</span>
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">security</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span><span class="o">-</span><span class="n">security</span> <span class="n">bullseye</span><span class="o">-</span><span class="n">security</span> <span class="n">main</span> <span class="n">contrib</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>3.1.4. Proxmox VE 测试存储库<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
+<p>此存储库包含最新的包，主要由开发人员用于测试新功能。要配置它，请将以下行添加到 <code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">pve</span> <span class="n">bullseye</span> <span class="n">pvetest</span>
+</pre></div>
+</div>
+<p><strong>仅用于测试新功能或错误修复。</strong></p>
+</section>
+<section id="ceph">
+<h2>3.1.5. Ceph 太平洋仓库<a class="headerlink" href="#ceph" title="Permalink to this headline"></a></h2>
+<p><strong>Ceph Pacific（16.2）在Proxmox VE 7.0中被宣布稳定</strong></p>
+<p>此存储库包含主要的Proxmox VE Ceph Pacific软件包。它们适用于生产。如果您在 Proxmox VE 上运行 Ceph 客户端或完整的 Ceph 集群，请使用此存储库。</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/ceph.list</span></code>文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">pacific</span> <span class="n">bullseye</span> <span class="n">main</span>
+</pre></div>
+</div>
+</section>
+<section id="ceph-pacific">
+<h2>3.1.6. Ceph Pacific 测试仓库<a class="headerlink" href="#ceph-pacific" title="Permalink to this headline"></a></h2>
+<p>此 Ceph 存储库包含 Ceph Pacific 软件包，然后再将其移动到主存储库。它用于在Proxmox VE上测试新的Ceph版本。
+<code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/ceph.list</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">pacific</span> <span class="n">bullseye</span> <span class="n">test</span>
+</pre></div>
+</div>
+</section>
+<section id="ceph-octopus">
+<h2>3.1.7. Ceph Octopus仓库<a class="headerlink" href="#ceph-octopus" title="Permalink to this headline"></a></h2>
+<p><strong>Ceph Octopus（15.2）在Proxmox VE 6.3中宣布稳定，它将继续在6.x版本的剩余生命周期内获得更新，并且Proxmox VE 7.x将继续获得更新，直到Ceph Octopus上游EOL（〜2022-07）</strong></p>
+<p>此储存库包含主要的 Proxmox VE Ceph Octopus 软件包。它们适用于生产。如果您在 Proxmox VE 上运行 Ceph 客户端或完整的 Ceph 集群，请使用此存储库。</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/ceph.list</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">octopus</span> <span class="n">bullseye</span> <span class="n">main</span>
+</pre></div>
+</div>
+<p>请注意，在较旧的Proxmox VE 6.x上，您需要在上面的存储库规范中bullseye 将更改为buster</p>
+</section>
+<section id="id5">
+<h2>3.1.8. Ceph Octopus测试仓库<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h2>
+<p>此 Ceph 存储库包含 Ceph 包，然后再将其移动到主存储库。它用于在Proxmox VE上测试新的Ceph版本。</p>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/ceph.list</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">proxmox</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">octopus</span> <span class="n">bullseye</span> <span class="n">test</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>3.1.9. 安全安装<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h2>
+<p>存储库中的发布文件使用 GnuPG 进行签名。APT 正在使用这些签名来验证所有包是否都来自受信任的源。</p>
+<p>如果您从官方ISO映像安装Proxmox VE，则验证密钥已安装。</p>
+<p>如果您在 Debian 之上安装 Proxmox VE，请使用以下命令下载并安装密钥：</p>
+<p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">wget</span> <span class="pre">https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg</span> <span class="pre">-O</span> <span class="pre">/etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg</span></code>
+之后使用 sha512sum CLI 工具验证校验和：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sha512sum /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg</span>
+<span class="mi">7</span><span class="n">fb03ec8a1675723d2853b84aa4fdb49a46a3bb72b9951361488bfd19b29aab0a789a4f8c7406e71a69aabbc727c936d3549731c4659ffa1a08f44db8fdcebfa</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">trusted</span><span class="o">.</span><span class="n">gpg</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">proxmox</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">bullseye</span><span class="o">.</span><span class="n">gpg</span>
+</pre></div>
+</div>
+<p>或 md5sum CLI 工具：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># md5sum /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg</span>
+<span class="n">bcc35c7173e0845c0d6ad6470b70f50e</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">trusted</span><span class="o">.</span><span class="n">gpg</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">proxmox</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">bullseye</span><span class="o">.</span><span class="n">gpg</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="第三章 系统管理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, bingsin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

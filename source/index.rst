@@ -11,3 +11,4 @@ Promxox VE 中文手册 v7.1
 
    introduce/index.rst
    install/index.rst
+   hostsysmgr/index.rst
