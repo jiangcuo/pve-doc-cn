@@ -1,1 +1,4 @@
 sphinx_markdown_tables == 0.0.13
+markdown >= 3.0.1
+recommonmark 
+sphinx_rtd_theme
