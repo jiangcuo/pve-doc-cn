@@ -48,20 +48,21 @@
 <li class="toctree-l4"><a class="reference internal" href="#ifupdown2">使用 ifupdown2 重新加载网络</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">3.3.1 网卡命名规范</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.3.2 网卡命名规范</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#systemd">Systemd网卡命名规范</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">3.3.2网络配置规划</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">3.3.3基于网桥的默认配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">3.3.4路由配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#iptables-nat">3.3.5基于iptables的网络地址转换配置（NAT）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#linux">3.3.6 Linux多网口绑定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vlan-802-1q">3.3.7 VLAN 802.1Q</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.3.3 网络配置规划</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.3.4 基于网桥的默认配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.3.5 路由配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iptables-nat">3.3.6 基于iptables的网络地址转换配置（NAT）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">3.3.7 Linux多网口绑定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vlan-802-1q">3.3.8 VLAN 802.1Q</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#vlan">基于VLAN的虚拟机网络</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#proxmox-vevlan">Proxmox VE主机上的VLAN</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#ipv6">3.3.9. 禁用IPV6</a></li>
 </ul>
 </li>
 </ul>
@@ -117,7 +118,7 @@
 </section>
 </section>
 <section id="id4">
-<h2>3.3.1 网卡命名规范<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
+<h2>3.3.2 网卡命名规范<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
 <p>目前我们采用的网络设备命名规范如下：</p>
 <ul class="simple">
 <li><p>网卡：en*，即systemd类的网络接口命名。新安装的Proxmox VE 5.0将采用该命名规范。</p></li>
@@ -143,7 +144,7 @@
 </section>
 </section>
 <section id="id5">
-<h2>3.3.2网络配置规划<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h2>
+<h2>3.3.3 网络配置规划<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h2>
 <p>你需要根据当前的网络规划以及可用资源，决定具体采用的网络配置模式。可选模式包括网桥、路由以及地址转换三种类型。</p>
 <p><strong>Proxmox VE服务器位于内部局域网，通过外部网关与互联网连接</strong></p>
 <p>这种情况下最适宜采用网桥模式。这也是新安装Proxmox VE服务器默认采用的模式。该模式下，所有虚拟机通过虚拟网卡与Proxmox VE虚拟网桥连接。其效果类似于虚拟机网卡直接连接在局域网交换机上，而Proxmox VE服务器就扮演了这个交换机的角色。</p>
@@ -154,7 +155,7 @@
 为日后维护使用方便，可以配置VLANs（IEEE 802.1q）和网卡绑定，也就是“链路聚合”。这样就可以灵活地建立复杂虚拟机网络结构。</p>
 </section>
 <section id="id6">
-<h2>3.3.3基于网桥的默认配置<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h2>
+<h2>3.3.4 基于网桥的默认配置<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h2>
 <p>网桥相当于一个软件实现的物理交换机。所有虚拟机共享一个网桥，在多个域的网络环境中，也可以创建多个网桥以分别对应不同网络域。理论上，每个Proxmox VE最多可以支持4094个网桥。
 Proxmox VE安装程序会创建一个名为<code class="docutils literal notranslate"><span class="pre">vmbr0</span></code>的网桥，并和检测到的服务器第一块网卡桥接。配置文件<code class="docutils literal notranslate"><span class="pre">/etc/network/interfaces</span></code>中的对应配置信息如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">lo</span>
@@ -175,7 +176,7 @@ Proxmox VE安装程序会创建一个名为<code class="docutils literal notrans
 <p>在基于网桥的默认配置下，虚拟机看起来就和直接接入物理网络一样。尽管所有虚拟机共享一根网线接入网络，但每台虚拟机都使用自己独立的MAC地址访问网络。</p>
 </section>
 <section id="id7">
-<h2>3.3.4路由配置<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h2>
+<h2>3.3.5 路由配置<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h2>
 <p>但大部分IPC服务器供应商并不支持基于网桥的默认配置方式，出于网络安全的考虑，一旦发现网络接口上有多个MAC地址出现，他们会立刻禁用相关网络端口。</p>
 <p><strong>提示</strong></p>
 <p>也有一些IPC服务器供应商允许你注册多个MAC地址。这就可以避免上面提到的问题，但这样你就需要注册每一个虚拟机MAC地址，实际操作会非常麻烦。</p>
@@ -203,7 +204,7 @@ Proxmox VE安装程序会创建一个名为<code class="docutils literal notrans
 </div>
 </section>
 <section id="iptables-nat">
-<h2>3.3.5基于iptables的网络地址转换配置（NAT）<a class="headerlink" href="#iptables-nat" title="Permalink to this headline"></a></h2>
+<h2>3.3.6 基于iptables的网络地址转换配置（NAT）<a class="headerlink" href="#iptables-nat" title="Permalink to this headline"></a></h2>
 <p>利用地址转换技术，所有虚拟机可以使用内部私有IP地址，并通过Proxmox VE服务器的IP来访问外部网络。Iptables将改写虚拟机和外部网络通信数据包，对于虚拟机向外部网络发出的数据包，将源IP地址替换成服务器IP地址，对于外部网络返回数据包，将目的地址替换为对应虚拟机IP地址。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>auto lo
 iface lo inet loopback
@@ -232,7 +233,7 @@ post-down iptables -t nat -D POSTROUTING -s ’10.10.10.0/24’ -o eno1
 </div>
 </section>
 <section id="linux">
-<h2>3.3.6 Linux多网口绑定<a class="headerlink" href="#linux" title="Permalink to this headline"></a></h2>
+<h2>3.3.7 Linux多网口绑定<a class="headerlink" href="#linux" title="Permalink to this headline"></a></h2>
 <p>多网口绑定（也称为网卡组或链路聚合）是一种将多个网卡绑定成单个网络设备的技术。利用该技术可以实现某个或多个目标，例如提高网络链路容错能力，增加网络通信性能等。</p>
 <p>类似光纤通道和光纤交换机这样的高速网络硬件的价格一般都非常昂贵。利用链路聚合技术，将两个物理网卡组成一个逻辑网卡，能够将网络传输速度加倍。大部分交换机设备都已经支持Linux内核的这个特性。如果你的服务器有多个以太网口，你可以将这些网口连接到不同的交换机，以便将故障点分散到不同的网络设备，一旦有物理线路故障或网络设备故障发生，多网卡绑定会自动将通信流量从故障线路切换到正常线路。</p>
 <p>链路聚合技术可以有效减少虚拟机在线迁移的时延，并提高Proxmox VE集群服务器节点之间的数据复制速度。</p>
@@ -304,7 +305,7 @@ post-down iptables -t nat -D POSTROUTING -s ’10.10.10.0/24’ -o eno1
 </div>
 </section>
 <section id="vlan-802-1q">
-<h2>3.3.7 VLAN 802.1Q<a class="headerlink" href="#vlan-802-1q" title="Permalink to this headline"></a></h2>
+<h2>3.3.8 VLAN 802.1Q<a class="headerlink" href="#vlan-802-1q" title="Permalink to this headline"></a></h2>
 <p>虚网（VLAN）是基于2层网络的广播域划分和隔离技术。利用VLAN，可以在一个物理网络中创建多个（最多4096）相互隔离的子网。
 每个VLAN都有一个独立的，称为tag的编号。相应的，每个网络数据包都被标上tag以标明其所属的VLAN。</p>
 <section id="vlan">
@@ -400,6 +401,16 @@ post-down iptables -t nat -D POSTROUTING -s ’10.10.10.0/24’ -o eno1
 </pre></div>
 </div>
 </section>
+</section>
+<section id="ipv6">
+<h2>3.3.9. 禁用IPV6<a class="headerlink" href="#ipv6" title="Permalink to this headline"></a></h2>
+<p>Proxmox VE在所有环境中都能正常工作，无论是否部署了IPv6。我们建议将所有设置保留为提供的默认值。</p>
+<p>如果仍需要在节点上禁用对 IPv6 的支持，请通过创建适当的 sysctl.conf （5） 代码段文件并设置正确的 sysctl 来执行此操作，例如添加 /etc/sysctl.d/disable-ipv6.conf 和内容：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">ipv6</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">disable_ipv6</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">net</span><span class="o">.</span><span class="n">ipv6</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">default</span><span class="o">.</span><span class="n">disable_ipv6</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>此方法比在<a class="reference external" href="https://www.kernel.org/doc/Documentation/networking/ipv6.rst">内核命令行</a>上禁用 IPv6 模块的加载更可取。</p>
 </section>
 </section>
 
