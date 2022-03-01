@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proxmox VE Nvidia-vGPU 中文教程 &mdash; Proxmox VE Nvidia-vGPU doc 6.4 documentation</title>
+  <title>第三章 安装Nvidia vGPU驱动 &mdash; Proxmox VE Nvidia-vGPU doc 6.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="第一章 认识vGPU" href="introduce.html" /> 
+    <link rel="prev" title="第二章 准备Nvidia vGPU驱动环境" href="env.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -26,7 +26,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Proxmox VE Nvidia-vGPU doc
+            <a href="index.html" class="icon icon-home"> Proxmox VE Nvidia-vGPU doc
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -37,10 +37,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduce.html">第一章 认识vGPU</a></li>
 <li class="toctree-l1"><a class="reference internal" href="env.html">第二章 准备Nvidia vGPU驱动环境</a></li>
-<li class="toctree-l1"><a class="reference internal" href="instdri.html">第三章 安装Nvidia vGPU驱动</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第三章 安装Nvidia vGPU驱动</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">下载Nvidia vGPU驱动</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -49,17 +52,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Proxmox VE Nvidia-vGPU doc</a>
+          <a href="index.html">Proxmox VE Nvidia-vGPU doc</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Proxmox VE Nvidia-vGPU 中文教程</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>第三章 安装Nvidia vGPU驱动</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/instdri.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -67,40 +70,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="proxmox-ve-nvidia-vgpu">
-<h1>Proxmox VE Nvidia-vGPU 中文教程<a class="headerlink" href="#proxmox-ve-nvidia-vgpu" title="Permalink to this headline"></a></h1>
-<p>本文将简要介绍Nvidia vGPU原理，更加详细的资料，请访问 <a class="reference external" href="https://docs.nvidia.com/grid/">https://docs.nvidia.com/grid/</a></p>
-<p>详细叙述Nvidia vGPU在Proxmox VE的部署过程。</p>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">目录:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduce.html">第一章 认识vGPU</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduce.html#nvidia-vgpu">1.1. Nvidia vGPU架构</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduce.html#id1">1.2. Nvidia vGPU支持的显卡</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduce.html#id2">1.3. Nvidia vGPU支持的系统</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduce.html#id3">1.4. 获取Nvidia vGPU软件和支持</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="env.html">第二章 准备Nvidia vGPU驱动环境</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="env.html#id1">2.1 安装必要的软件源</a></li>
-<li class="toctree-l2"><a class="reference internal" href="env.html#id2">2.2 调整相关内核参数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="env.html#iommu">2.3 开启iommu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="env.html#id3">2.4 安装依赖</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="instdri.html">第三章 安装Nvidia vGPU驱动</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="instdri.html#id1">下载Nvidia vGPU驱动</a></li>
-</ul>
-</li>
-</ul>
-</div>
+  <section id="nvidia-vgpu">
+<h1>第三章 安装Nvidia vGPU驱动<a class="headerlink" href="#nvidia-vgpu" title="Permalink to this headline"></a></h1>
+<section id="id1">
+<h2>下载Nvidia vGPU驱动<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<p>Proxmox VE作为KVM平台。自然需要下载KVM版本的驱动。</p>
+<p>Nvidia vGPU驱动和Proxmox VE平台的兼容性</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Nvida vGPU版本</th>
+<th>Proxmox VE内核</th>
+<th>ok？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grid 12</td>
+<td>≤5.4</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>Grid 13</td>
+<td>≤5.4</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>Grid 13.01</td>
+<td>≥5.13</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table></section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="introduce.html" class="btn btn-neutral float-right" title="第一章 认识vGPU" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="env.html" class="btn btn-neutral float-left" title="第二章 准备Nvidia vGPU驱动环境" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

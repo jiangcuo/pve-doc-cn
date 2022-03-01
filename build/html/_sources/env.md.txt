@@ -48,7 +48,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"
 如果使用`Systemd-boot`引导的系统，应该编辑 `/etc/kernel/cmdline`文件。
 使用`proxmox-boot-tool refresh`更新系统引导。
 
-## 3.3 安装依赖
+## 2.4 安装依赖
 
 安装`dkms`和`pve-headers`，用于安装驱动。`jq`和`uuid-runtime`用于配合`mdevctl`管理Nvidia vGPU设备。
 ```
