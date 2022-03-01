@@ -1,6 +1,6 @@
 # 第三章 安装Nvidia vGPU驱动
 
-## 下载Nvidia vGPU驱动
+## 3.1. 下载Nvidia vGPU驱动
 
 Proxmox VE作为KVM平台。自然需要下载KVM版本的驱动。
 
