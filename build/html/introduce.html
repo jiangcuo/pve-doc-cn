@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第一章 认识vGPU &mdash; Proxmox VE Nvidia-vGPU doc 6.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Proxmox VE Nvidia-vGPU 中文教程" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Proxmox VE Nvidia-vGPU doc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第一章 认识vGPU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nvidia-vgpu">1.1. Nvidia vGPU架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.2. Nvidia vGPU支持的显卡</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.3. Nvidia vGPU支持的系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.4. 获取Nvidia vGPU软件和支持</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Proxmox VE Nvidia-vGPU doc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>第一章 认识vGPU</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduce.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vgpu">
+<h1>第一章 认识vGPU<a class="headerlink" href="#vgpu" title="Permalink to this headline"></a></h1>
+<p>要为VM提供图形引擎，一般分为3种。</p>
+<ul class="simple">
+<li><p>软件模拟图形-性能差</p></li>
+<li><p>显卡直通-性能最好，一个虚拟机独享一个显卡</p></li>
+<li><p>vGPU-性能好，多个虚拟机共享一个显卡</p></li>
+</ul>
+<p>在市面上主要有如下3种vGPU解决方案。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>intel</th>
+<th>amd</th>
+<th>nvidia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GVT-g</td>
+<td>MxGPU</td>
+<td>Nvidia vGPU</td>
+</tr>
+</tbody>
+</table><p>本文主要介绍Nvdia vGPU</p>
+<section id="nvidia-vgpu">
+<h2>1.1. Nvidia vGPU架构<a class="headerlink" href="#nvidia-vgpu" title="Permalink to this headline"></a></h2>
+<p>下图为Nvidia vGPU系统架构
+<img alt="Nvidia vGPU架构" src="https://docs.nvidia.com/grid/13.0/common/graphics/architecture-grid-vgpu-overview.png" /></p>
+<p>从上图中可以看到在Hypervisor的硬件上存在Nvidia物理上的GPU，软件上存在Nvidia vGPU管理器。</p>
+<p>那么不难看出，要实现Nvidia vGPU不仅要物理GPU，还需要相应的管理程序。</p>
+</section>
+<section id="id1">
+<h2>1.2. Nvidia vGPU支持的显卡<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<p>具体型号请参考下面链接
+<a class="reference external" href="https://docs.nvidia.com/grid/13.0/product-support-matrix/index.html">https://docs.nvidia.com/grid/13.0/product-support-matrix/index.html</a></p>
+<p>大致如下</p>
+<ul class="simple">
+<li><p>A10</p></li>
+<li><p>A16</p></li>
+<li><p>A30</p></li>
+<li><p>A40, A10</p></li>
+<li><p>M6, M10, M60</p></li>
+<li><p>P4, P6, P40, P100, P100 12GB</p></li>
+<li><p>T4</p></li>
+<li><p>V100</p></li>
+<li><p>RTX A5000</p></li>
+<li><p>RTX A6000</p></li>
+<li><p>RTX 6000, RTX 6000 passive, RTX 8000, RTX 8000 passive</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>1.3. Nvidia vGPU支持的系统<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<p>不同的Hypervisor和不同的驱动软件对系统的支持性不一样。完整的兼容性，请参考对应的Grid文档</p>
+<p>那么笔者归纳大致有如下：</p>
+<ul class="simple">
+<li><p>ubuntu</p></li>
+<li><p>redhat</p></li>
+<li><p>Windows</p></li>
+<li><p>SUSE</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>1.4. 获取Nvidia vGPU软件和支持<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<p>请前往Nvidia 官网获取软件和支持。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Proxmox VE Nvidia-vGPU 中文教程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, bingsin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
