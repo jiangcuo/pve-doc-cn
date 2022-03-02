@@ -45,19 +45,19 @@ LVM本身不需要任何特殊的硬件，内存要求非常低
 首先创建一个分区。
 
 ```
-# sgdisk -N 1 /dev/sdb
+sgdisk -N 1 /dev/sdb
 ```
 
 创建一个未确认的 Physical Volume （PV） 和 250K 元数据大小。
 
 ```
-# pvcreate --metadatasize 250k -y -ff /dev/sdb1
+pvcreate --metadatasize 250k -y -ff /dev/sdb1
 ```
 
 在 /dev/sdb1 上创建名为"vmdata"的卷组
 
 ```
-# vgcreate vmdata /dev/sdb1
+vgcreate vmdata /dev/sdb1
 ```
 
 ## 3.7.4. 为 /var/lib/vz 创建一个额外的 LV
@@ -65,19 +65,19 @@ LVM本身不需要任何特殊的硬件，内存要求非常低
 下面命令可以轻松创建一个LV。
 
 ```
-# lvcreate -n <Name> -V <Size[M,G,T]> <VG>/<LVThin_pool>
+lvcreate -n <Name> -L <Size[M,G,T]> <VG>
 ```
 
 如在pve卷组下创建一个名为vz的10g lv
 
 ```
-# lvcreate -n vz -L 10G vmdata
+ lvcreate -n vz -L 10G vmdata
 ```
 
 接着在做个。
 
 ```
-# mkfs.ext4 /dev/vmdata/vz
+ mkfs.ext4 /dev/vmdata/vz
 ```
 
 最后，必须安装它。
@@ -107,11 +107,11 @@ lvcreate -L 10G -T -n data vmdata
 
 
 ```
-# lvresize --size +<size[\M,G,T]> --poolmetadatasize +<size[\M,G]> <VG>/<LVThin_pool>
+lvresize --size +<size[\M,G,T]> --poolmetadatasize +<size[\M,G]> <VG>/<LVThin_pool>
 ```
 将data精简池增加10G，同时将元数据池增加1G
 
 ```
-# lvresize --size +10G --poolmetadatasize +1G vmdata/data
+ lvresize --size +10G --poolmetadatasize +1G vmdata/data
 ```
 

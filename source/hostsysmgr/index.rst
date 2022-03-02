@@ -20,3 +20,4 @@ Proxmox VE安装后默认配置使用Debian的默认软件源，所以你可以�
    ExtMetricServer.md
    diskhl.md
    lvm.md
+   zfs.md
