@@ -17,4 +17,5 @@ Proxmox VE安装后默认配置使用Debian的默认软件源，所以你可以�
    syssoftupdate.md
    netconfig.md
    timesync.md
+   ExtMetricServer.md
 
