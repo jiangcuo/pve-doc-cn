@@ -267,3 +267,204 @@ proxmox-boot-tool init <new disk's ESP>
 ```
 grub-install <new disk>
 ```
+
+## 3.8.6.激活电子邮件通知
+
+ZFS 有一个事件守护进程，专门监控 ZFS 内核模块产生的各类事件。当发生严重错误，例如
+存储池错误时，该进程还可以发送邮件通知。
+
+可 以 编 辑 配 置 文 件` /etc/zfs/zed.d/zed.rc `以 激 活 邮 件 通 知 功 能 。 
+只 需 将 配 置 参 数
+`ZED_EMAIL_ADDR` 前的注释符号去除即可，如下：
+
+`ZED_EMAIL_ADDR="root" `
+
+请注意，Proxmox VE 会将邮件发送给为 root 用户配置的电子邮件地址。
+
+
+## 3.8.6 配置 ZFS 内存使用上限
+
+默认情况下，ZFS会使用宿主机50%的内存做为ARC缓存。
+
+为 ARC 分配足够的内存对于 IO 性能至关重要，因此请谨慎减少内存。根据一般情况，建议，1TB空间使用1G内存，同时预留2G基本内存。如果池有8TB空间，那应该给ARC分配8G+2G共10G的内存。
+
+您可以通过直接写入zfs_arc_max模块参数来更改当前引导的 ARC 使用限制（重新启动会失效）：
+
+```
+ echo "$[10 * 1024*1024*1024]" >/sys/module/zfs/parameters/zfs_arc_max
+```
+
+要永久生效，请将以下行添加到 ```/etc/modprobe.d/zfs.conf```中。
+如要限制为8G内存，则添加如下：
+```
+options zfs zfs_arc_max=8589934592
+```
+**注意**:如果所需的zfs_arc_max值小于或等于 zfs_arc_min（默认为系统内存的 1/32），则将忽略zfs_arc_max，除非您还将zfs_arc_min设置为最多 zfs_arc_max - 1。
+
+如下，在256G内存的系统上，限制ARC为8GB，需要设置zfs_arc_min -1。只设置zfs_arc_max是不行的
+```
+echo "$[8 * 1024*1024*1024 - 1]" >/sys/module/zfs/parameters/zfs_arc_min
+echo "$[8 * 1024*1024*1024]" >/sys/module/zfs/parameters/zfs_arc_max
+```
+如果根文件系统是 ZFS，则每次更改此值时都必须更新初始化接口：
+``` update-initramfs -u```，同时重新启动才能激活这些更改。
+
+## 3.8.7 ZFS 上的 SWAP
+
+使用 zvol 创建 SWAP 分区可能会导致一些问题，例如系统卡死或者很高的 IO 负载。特别是
+在向外部存储备份文件时会容易触发此类问题。
+
+我们强烈建议为 ZFS 配置足够的物理内存，避免系统出现可用内存不足的情形。如果实在
+想要创建一个 SWAP 分区，最好是直接在物理磁盘上创建。
+
+可以在安装 Proxmox VE 时通过高级选项设置预留磁盘空间，以便创建 SWAP。此外，你可以调低“swappiness”参数值。通常，设置为 10 比较好。
+
+`sysctl -w vm.swappiness=10`
+
+如果需要将 swappiness 参数设置持久化，可以编辑文件`/etc/sysctl.conf`，插入下内容：
+
+`vm.swappiness=10`
+
+
+下表示 Linux 内核 swappiness 参数设置表
+|值 |对应策略|
+|---|------|
+|vm.swappiness=0 |内核仅在内存耗尽时进行 swap|。
+|vm.swappiness=1| 内核仅执行最低限度的 swap。|
+|vm.swappiness=10| 当系统有足够多内存时，可考虑使用该值，以提高系统性能。|
+|vm.swappiness=60 |默认设置值。|
+|vm.swappiness=100 |内核将尽可能使用 swap|
+
+
+## 3.8.8 加密 ZFS 数据集
+ZFS on Linux 在 0.8.0 版之后引入了本地数据集加密功能。将 ZFS on Linux 升级后，就可以
+对指定存储池启用加密功能：
+```
+zpool get feature@encryption tank
+NAME PROPERTY VALUE SOURCE
+tank feature@encryption disabled local
+
+zpool set feature@encryption=enabled
+
+zpool get feature@encryption tank
+NAME PROPERTY VALUE SOURCE
+tank feature@encryption enabled local
+```
+目前还不支持通过 Grub 从加密数据集启动系统，并且在启动过程中对自动解锁加密数据集的支持也很弱。不支持加密功能的旧版 ZFS 也不能解密相关数据。
+
+建议在启动后手工解锁存储数据集，或使用 zfs load-key 命令将启动中解锁数据集所需 key
+
+在对生产数据正式启用加密功能前，建议建立并测试备份程序有效性。注意，一旦 key 信息丢失，将永远不可再访问加密数据。
+
+创建数据集`/zvols `时需要设置加密，并且默认情况下会继承到子数据集。例如，要创建加密的数据集 `tank/encrypted_data `并将其配置为 Proxmox VE 中的存储，请运行以下命令：
+
+```
+zfs create -o encryption=on -o keyformat=passphrase tank/encrypted_data
+Enter passphrase:
+Re-enter passphrase:
+pvesm add zfspool encrypted_zfs -pool tank/encrypted_data
+ ```
+
+在此存储上创建的所有来宾卷/磁盘都将使用父数据集的共享密钥材料进行加密。
+
+要实际使用存储，需要加载关联的密钥材料并装载数据集。这可以通过以下步骤一步完成：
+
+``` 
+zfs mount -l tank/encrypted_data
+Enter passphrase for 'tank/encrypted_data':
+```
+
+还可以使用（随机）密钥文件，而不是通过设置密钥分配和密钥格式属性来提示输入密码，无论是在创建时还是在现有数据集上使用 zfs 更改键：
+``` 
+dd if=/dev/urandom of=/path/to/keyfile bs=32 count=1
+zfs change-key -o keyformat=raw -o keylocation=file:///path/to/keyfile tank/encrypted_data
+```
+
+**警告**	使用密钥文件时，需要特别注意保护密钥文件，防止未经授权的访问或意外丢失。没有密钥文件，则无法访问纯文本数据！
+
+在加密数据集下创建的来宾卷将相应地设置其 encryptionroot 属性。密钥材料只需在每个加密根加载一次，即可用于其下的所有加密数据集。
+
+有关更多详细信息和高级用法，请参阅加 man zfs 手册的 Encryption 小节，包括 encryptionroot，encryption，
+keylocation，keyformat 和 keystatus 属性，zfs load-key，zfs unload-key 和 zfs change-key
+
+
+## 3.8.10. ZFS 中的压缩
+在数据集上启用压缩后，ZFS 会尝试在写入所有新块之前对其进行压缩，并在读取时解压缩它们。现有数据将不会被追溯压缩。
+
+您可以使用以下命令启用压缩：
+```
+ zfs set compression=<algorithm> <dataset>
+```
+
+我们建议使用 lz4 算法，因为它增加的 CPU 开销非常少。其他算法，如 lzjb 和 gzip-N，其中 N 是从 1（最快）到 9（最佳压缩比）的整数，也可用。根据算法和数据的可压缩性，启用压缩甚至可以提高 I/O 性能。
+
+您可以随时禁用压缩：
+```
+zfs set compression=off <dataset>
+```
+同样，只有新块会受到此更改的影响。
+
+## 3.8.11. ZFS 特殊设备
+
+由于版本 0.8.0 ZFS 支持特殊设备。池中的特殊设备用于存储元数据、重复数据删除表和可选的小型文件块。
+
+特殊设备可以提高由具有大量元数据更改的慢速旋转硬盘组成的池的速度。例如，涉及创建、更新或删除大量文件的工作负载将受益于特殊设备的存在。ZFS数据集还可以配置为在特殊设备上存储整个小文件，这可以进一步提高性能。特殊设备应使用快速SSD。
+
+特殊设备的冗余应与池中的冗余相匹配，因为特殊设备是整个池的故障点。
+
+**注意** 无法撤消将特殊设备添加到池中的过程！
+
+**使用特殊设备和 RAID-1 创建池：**
+```
+zpool create -f -o ashift=12 <pool> mirror <device1> <device2> special mirror <device3> <device4>
+```
+**使用 RAID-1 将特殊设备添加到现有池中：**
+```
+zpool add <pool> special mirror <device1> <device2>
+```
+ZFS 数据集支持 special_small_blocks=<大小> 属性。size可以为0，这样可以禁止在特殊设备上存储小文件，或者设置512B到128K之间的2的幂值。设置后，将在特殊设备上分配小于该大小的新文件块。
+
+**注意**，如果special_small_blocks的值大于或等于数据集的记录大小（默认为 128K），则所有数据都将写入特殊设备，因此请小心设置。
+
+在池上设置 special_small_blocks， 所有的子数据集会继承此值。（例如，池中的所有容器都将选择加入小文件块）。
+
+为整个池设置值：
+``` 
+zfs set special_small_blocks=4K <pool>
+```
+为单个数据集设置值：
+```
+zfs set special_small_blocks=4K <pool>/<filesystem>
+```
+
+禁止某个数据集存储小文件块：
+``` 
+zfs set special_small_blocks=0 <pool>/<filesystem>
+```
+
+
+## 3.8.12. ZFS 池功能
+
+对 ZFS 中磁盘格式的更改仅在主要版本更改之间进行，并通过功能指定。所有特征以及一般机制都在 zpool-features（5）手册页中查询到。
+
+由于启用新功能会使池无法由旧版本的 ZFS 导入，因此需要管理员通过在池上运行 zpool 升级来主动完成此操作（请参阅 zpool-upgrade（8） 手册页）。
+
+除非您需要使用其中一项新功能，否则启用它们没有任何好处。
+
+实际上，启用新功能有一些缺点：
+
+- 如果 rpool 上激活了新功能，则仍然使用 grub 引导的 ZFS 根目录的系统将变得无法启动，因为 grub 中 ZFS 的实现不兼容。
+
+- 使用较旧的内核引导时，系统将无法导入任何升级的池，该内核仍随旧的 ZFS 模块一起提供。
+
+- 引导较旧的Proxmox VE ISO来修复非引导系统同样不起作用。
+  
+**注意**：如果您的系统仍然使用 grub 引导，请不要升级 rpool，因为这会使您的系统无法引导。这包括在 Proxmox VE 5.4 之前安装的系统，以及使用旧版 BIOS 引导的系统（请参阅如何确定引导加载程序）。
+
+为 ZFS 池启用新功能：
+```
+zpool upgrade <pool>
+```
+
+
+
