@@ -143,3 +143,127 @@ N个磁盘的 RAIDZ 类型 vdev 的可用空间大致为 N-P，其中 P 是 RAID
 ```
 zfs get volsize,refreservation,used <pool>/vm-<vmid>-disk-X
 ```
+volsize 是呈现给 VM 的磁盘的大小，而 refreservation 保留显示池上的保留空间，其中包括奇偶校验数据所需的预期空间。如果池已精简置备，则重新预留将设置为 0。观察这种情况的另一种方法是比较 VM 中已用磁盘空间和 used 属性。请注意，如果有快照可能数据不准。
+
+有几个选项可以减少奇偶校验的空间消耗：
+- 增加volblocksize 
+- 使用镜像而不是RAIDZ
+- 使用ashit=9，这样blocksize=512b
+  
+volblocksize 属性只能在创建 ZVOL 时设置。可以在存储配置中更改。执行此操作时，需要相应地在虚拟机内部调整容量，并且根据用例，如果只是从 ZFS 层移动到来宾层，则会出现写入放大问题。
+
+在创建池时使用 ashift=9 可能会导致性能下降，具体取决于下面的磁盘，并且以后无法更改。
+
+镜像 vdev（RAID1、RAID10）有利于VM负载。除非您的环境具有特定需求和特征，必须使用镜像vdev，不然RAIDZ 的特性也是可以接受的。
+
+## 3.8.4 系统引导程序
+Proxmox VE 使用 proxmox-boot-tool 来管理引导加载程序配置。有关详细信息，请参阅有关 Proxmox VE 主机引导加载程序的章节。
+
+## 3.8.5. ZFS 管理
+
+本节为您提供了一些常见任务的使用示例。ZFS本身非常强大，并提供了许多选项。管理 ZFS 的主要命令是 zfs 和 zpool。这两个命令都带有出色的手册页，可以使用以下命令阅读：
+
+```
+man zpool
+man zfs
+```
+
+## 3.8.6. 创建新的 zpool
+
+
+**若要创建新池**，至少需要一个磁盘。ashift 应具有与底层磁盘相同的扇区大小（2 次方位）或更大。
+
+```
+ zpool create -f -o ashift=12 <pool> <device>
+```
+**要激活压缩**（请参阅 ZFS 中的压缩部分）：
+```
+ zfs set compression=lz4 <pool>
+ ```
+
+**使用 RAID-0 创建新池**
+最少 1 个磁盘
+```
+ zpool create -f -o ashift=12 <pool> <device1> <device2>
+ ```
+
+**使用 RAID-1 创建新池**
+最少 2 个磁盘
+```
+ zpool create -f -o ashift=12 <pool> mirror <device1> <device2>
+ ```
+
+**使用 RAID-10 创建新池**
+最少 4 个磁盘
+```
+ zpool create -f -o ashift=12 <pool> mirror <device1> <device2> mirror <device3> <device4>
+ ```
+
+**使用 RAIDZ-1 创建新池**
+最少 3 个磁盘
+```
+ zpool create -f -o ashift=12 <pool> raidz1 <device1> <device2> <device3>
+ ```
+
+**使用 RAIDZ-2 创建新池**
+最少 4 个磁盘
+```
+zpool create -f -o ashift=12 <pool> raidz2 <device1> <device2> <device3> <device4>
+```
+
+**创建具有缓存的新池 （L2ARC）**
+可以使用独立的硬盘分区（建议使用 SSD）作为缓存，以提高 ZFS 性能。
+
+```
+zpool create -f -o ashift=12 <pool> <device> cache <cache_device>
+```
+
+**使用日志创建新池 （ZIL）**
+可以使用独立的硬盘分区（建议使用 SSD）作为缓存，以提高 ZFS 性能。
+
+```
+zpool create -f -o ashift=12 <pool> <device> log <log_device>
+```
+
+**为已有的存储池添加缓存和日志盘**
+如果你要为一个未配置缓存和日志盘的 ZFS 存储池添加缓存和日志盘，首先需要使用 `parted`
+或者 `gdisk`将 SSD 盘划分为两个分区
+
+**注意** 需要使用 GPT 分区表。
+
+日志盘的大小应约为物理内存大小的一半。SSD的其余部分可以用作缓存。
+```
+# zpool add -f <pool> log <device-part1> cache <device-part2>
+```
+
+**更改故障设备**
+
+```
+ zpool replace -f <pool> <old device> <new device>
+ ```
+
+**在使用 systemd-boot 时更换故障的系统磁盘**
+
+根据Proxmox VE的安装方式，它要么使用proxmox-boot-tool [3]，要么使用普通的grub作为引导加载程序（参见主机引导加载程序）。您可以通过运行以下命令进行检查：
+```
+proxmox-boot-tool status
+```
+复制分区表、重新颁发 GUID 和替换 ZFS 分区的第一步是相同的。要使系统可从新磁盘引导，需要执行不同的步骤，具体取决于所使用的引导加载程序。
+```
+sgdisk <healthy bootable device> -R <new device>
+sgdisk -G <new device>
+zpool replace -f <pool> <old zfs partition> <new zfs partition>
+```
+注意	使用 zpool status -v 命令监视新磁盘的重新同步过程的进展程度。
+
+**使用 proxmox-boot-tool**：
+```
+proxmox-boot-tool format <new disk's ESP>
+proxmox-boot-tool init <new disk's ESP>
+```
+注意	ESP 代表 EFI 系统分区，它是从版本 5.4 开始由 Proxmox VE 安装程序设置的可启动磁盘上的分区 #2。有关详细信息，请参阅设置新分区以用作同步的 ESP。
+
+**使用 grub**：
+```
+grub-install <new disk>
+```
