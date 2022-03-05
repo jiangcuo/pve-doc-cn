@@ -152,7 +152,7 @@ grub 多年来一直是引导 Linux 系统的事实标准，并且有多的文�
 
 systemd-boot 是一个轻量级的 EFI 引导加载程序。它直接从安装它的 EFI 服务分区 （ESP） 读取内核和 initrd 映像。从 ESP 直接加载内核的主要优点是，它不需要重新实现用于访问存储的驱动程序。在 Proxmox VE 中，proxmox-boot-tool 用于使 ESP 上的配置保持同步。
 
-## 配置
+### 配置
 systemd-boot 是通过 EFI 系统分区 （ESP） 根目录中的文件加载程序/loader.conf 配置的。有关详细信息，请参阅 loader.conf（5） 手册页。
 
 每个引导加载程序条目都放在目录加载程序/条目/中自己的文件中
