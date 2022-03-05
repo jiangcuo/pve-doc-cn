@@ -54,7 +54,7 @@ ID 256 gen 6 top level 5 path var/lib/pve/local-btrfs
 
 本节为您提供了一些常见任务的使用示例。
 
-创建 BTRFS 文件系统
+### 创建 BTRFS 文件系统
 
 要创建 BTRFS 文件系统，请使用 mkfs.btrfs。-d 和 -m 参数分别用于设置元数据和数据的配置文件。使用可选的 -L 参数，可以设置标签。
 
@@ -71,7 +71,7 @@ ID 256 gen 6 top level 5 path var/lib/pve/local-btrfs
 mkfs.btrfs -m raid1 -d raid1 -L My-Storage /dev/sdb1 /dev/sdc1
 ```
 
-挂载 BTRFS 文件系统
+### 挂载 BTRFS 文件系统
 
 分区之后，可以挂载新的文件系统，如下：
 ```
@@ -96,7 +96,7 @@ mount /my-storage
 ```
 下次重新启动后，系统将在启动时自动完成挂载操作。
 
-将 BTRFS 文件系统添加到 Proxmox VE
+### 将 BTRFS 文件系统添加到 Proxmox VE
 
 您可以通过 Web 界面或使用 CLI 将现有的 BTRFS 文件系统添加到 Proxmox VE，例如：
 
@@ -105,28 +105,52 @@ pvesm add btrfs my-storage --path /my-storage
 
 ```
 
-创建子卷
+### 创建子卷
 创建子卷会将其链接到 btrfs 文件系统中的路径，在该路径中，它将显示为常规目录。
 ```
 btrfs subvolume create /some/path
 ```
 之后/some/path将像常规目录一样工作。
 
-删除子卷
+### 删除子卷
 与通过 rmdir 删除的目录相反，子卷不需要为空即可通过 btrfs 命令删除。
 
 ```
  btrfs subvolume delete /some/path
 ```
 
-创建子卷的快照
+### 创建子卷的快照
 
 BTRFS 实际上并不区分快照和普通子卷，因此拍摄快照也可以被视为创建子卷的任意副本。按照惯例，Proxmox VE 在创建来宾磁盘或子卷的快照时将使用只读标志，但此标志也可以在以后更改。
 
 ```
-BTRFS 实际上并不区分快照和普通子卷，因此拍摄快照也可以被视为创建子卷的任意副本。按照惯例，Proxmox VE 在创建来宾磁盘或子卷的快照时将使用只读标志，但此标志也可以在以后更改。
+ btrfs subvolume snapshot -r /some/path /a/new/path
 ```
+这将在 ```/a/new/path``` 的 `/some/path` 上创建子卷的只读"克隆"。将来对 /some/path 的任何修改都会导致在修改之前复制修改后的数据。
+如果省略了只读 （-r） 选项，则两个子卷都是可写的。
 
+###  启用压缩
 
+默认情况下，BTRFS 不压缩数据。要启用压缩，可以添加压缩装载选项。请注意，已经写入的数据在事后不会被压缩。
+
+默认情况下，rootfs 将在 `/etc/fstab` 中列出，如下所示：
+
+```
+UUID=<uuid of your root file system> / btrfs defaults 0 1
+```
+您可以简单地将 compress=zstd、compress=lzo 或 compress=zlib 附加到上面的默认值，如下所示：
+
+```
+UUID=<uuid of your root file system> / btrfs defaults,compress=zstd 0 1
+```
+此更改将在重新启动后生效。
+
+### 检查空间使用情况
+
+经典的df工具可能会为某些btrfs设置输出令人困惑的值。为了更好地估计，请使用 btrfs 文件系统使用情况 /PATH 命令，例如：
+
+```
+btrfs fi usage /my-storage
+```
 
 
