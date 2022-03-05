@@ -17,7 +17,7 @@ Promxox VE 中文手册 v7.1
 在初步翻译过程中，会有很多错误，请谅解。
 
 欢迎各位PVE USER，对本翻译反馈各种问题和建议。如果可以，也可以参与到翻译中。
-本项目github地址：https://pve.proxmox.com/pve-docs/pve-admin-guide.html
+本项目github地址：https://github.com/jiangcuo/pve-doc-cn
 QQ群：904754537
 
 
