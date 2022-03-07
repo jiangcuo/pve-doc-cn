@@ -25,7 +25,7 @@ Pmxcfs 基于 FUSE 技术，其实现类似于 POSIX。但我们仅实现了必�
 
 ## 6.4.1 文件
 |文件名|说明|
-|----|----|
+|------|------|
 |corosync.conf|corosync 集群配置|
 |storage.cfg|Proxmox VE 存储服务配置|
 |datacenter.cfg|Proxmox VE 数据中心配置|
@@ -39,7 +39,7 @@ Pmxcfs 基于 FUSE 技术，其实现类似于 POSIX。但我们仅实现了必�
 |priv/pve-root-ca.key| 集群 CA 的私钥|
 |nodes/`<NAME>`/pve-ssl.pem|Web 服务器的公开 SSL 证书（由集群ca签发）|
 |nodes/`<NAME>`/pve-ssl.key|pve-ssl.pem 的私钥|
-|nodes/`<NAME>`/pveproxy-ssl.pem|Web 服务器的公开 SSL 证书链（可由pve-ssl.pem 覆盖）
+|nodes/`<NAME>`/pveproxy-ssl.pem|Web 服务器的公开 SSL 证书链（可由pve-ssl.pem 覆盖）|
 |nodes/`<NAME>`/pveproxy-ssl.key|pveproxy-ssl.pem 的私钥|
 |nodes/`<NAME>`/qemu-server/<VMID>.conf|KVM 虚拟机的配置文件|
 |nodes/`<NAME>`/lxc/<VMID>.conf|LXC 容器的配置文件|
