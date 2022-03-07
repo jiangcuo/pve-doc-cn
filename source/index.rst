@@ -27,3 +27,6 @@ QQ群：904754537
    introduce/index.rst
    install/index.rst
    hostsysmgr/index.rst
+   GUI/index.rst
+   cluster/index.rst
+   pmxcfs/index.rst
