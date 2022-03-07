@@ -25,7 +25,7 @@ Pmxcfs 基于 FUSE 技术，其实现类似于 POSIX。但我们仅实现了必�
 
 ## 6.4.1 文件
 |文件名|说明|
-|----|------|
+|----|----|
 |corosync.conf|corosync 集群配置|
 |storage.cfg|Proxmox VE 存储服务配置|
 |datacenter.cfg|Proxmox VE 数据中心配置|
@@ -50,7 +50,7 @@ Pmxcfs 基于 FUSE 技术，其实现类似于 POSIX。但我们仅实现了必�
 ## 6.4.2 符号链接
 
 |目录|链接路径|
-|------|----------|
+|------|------|
 |local |nodes/`<LOCAL_HOST_NAME>`|
 |qemu-servcer|nodes/`<LOCAL_HOST_NAME>`qemu-server |
 |lxc |nodes/`<LOCAL_HOST_NAME>`/lxc|
@@ -60,7 +60,7 @@ Pmxcfs 基于 FUSE 技术，其实现类似于 POSIX。但我们仅实现了必�
 
 ## 6.4.3 用于调试的特殊状态文件（JSON）
 |文件名|说明|
-|----|-----|
+|----|----|
 |.version |文件版本（用于检测文件内容变更）|
 |.members |集群成员的信息|
 |.vmlist |虚拟机列表|
@@ -76,7 +76,7 @@ echo "1" >/etc/pve/.debug
 ```
 echo "0" >/etc/pve/.debug
 ```
-## 6.5 文件系统恢复
+# 6.5 文件系统恢复
 如果你的 Proxmox VE 服务器出现故障，例如硬件故障，你可以将 pmxcfs 的数据库文件/`var/lib/pve-cluster/config.db` 复制到一台新的 Proxmox VE 服务器。
 
 在新服务器上（没有配置任何虚拟机或容器），停止 pve-cluster 服务，覆盖 config.db 文件（需要设置权限为 0600），然后修改/etc/hostname 和/etc/hosts 和故障服务器应文件一致，最后重启新服务器并检查是否恢复正常（不要忘记虚拟机/容器镜像数据）。
