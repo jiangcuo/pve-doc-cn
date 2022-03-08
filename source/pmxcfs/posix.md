@@ -24,6 +24,7 @@ Pmxcfs 基于 FUSE 技术，其实现类似于 POSIX。但我们仅实现了必�
 /etc/pve
 
 ## 6.4.1 文件
+
 |文件名|说明|
 |--|--|
 |corosync.conf|corosync 集群配置|
