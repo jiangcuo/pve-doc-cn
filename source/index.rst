@@ -30,3 +30,4 @@ QQ群：904754537
    GUI/index.rst
    cluster/index.rst
    pmxcfs/index.rst
+   Storage/index.rst
