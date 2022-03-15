@@ -27,6 +27,7 @@ CIFS 存储的用户名。可选项，默认为““guest”。
   
 用户口令。可选项。用户口令文件仅有 root 可读（/etc/pve/priv/<STORAGE_ID>.cred）。
 
+- domain
 
 设置 CIFS 存储的用户域（workgroup）。可选项。
 
