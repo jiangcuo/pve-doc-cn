@@ -18,5 +18,7 @@ Proxmox VE 的存储库（libpve-storage-perl 包）具有非常灵活的插件�
    volume.md
    storagecmdline.md
    dirstorage.md
-   nfsstorege.md
-   
+   nfsstorage.md
+   cifsstorage.md
+   pbsstorage.md
+   glusterfsstorage.md
