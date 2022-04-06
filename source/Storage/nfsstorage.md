@@ -50,7 +50,7 @@ NFS 本身不支持快照功能，但可利用 qcow2 文件格式的支持进行
 
 |数据类型 |镜像格式 |支持共享| 支持快照 |支持链接克隆|
 |-----|-----|-----|----|-----|
-|虚拟机镜像 容器镜像 容器模板 iso镜像 虚拟机备份 snipptes|raw qcow2 vmdk subvol|是|qcow2|qcow2|
+|虚拟机镜像 容器镜像 容器模板 iso镜像 虚拟机备份 snipptes|raw qcow2 vmdk|是|qcow2|qcow2|
 
 ## 7.6.3 示例
 

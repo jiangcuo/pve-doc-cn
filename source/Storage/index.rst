@@ -22,3 +22,11 @@ Proxmox VE 的存储库（libpve-storage-perl 包）具有非常灵活的插件�
    cifsstorage.md
    pbsstorage.md
    glusterfsstorage.md
+   zfsstorage.md
+   lvmstorage.md
+   lvmthinstorage.md
+   openiscsi.md
+   iscsidirect.md
+   rbd.md
+   cephfs.md
+   brtfs.md
