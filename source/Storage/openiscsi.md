@@ -1,4 +1,4 @@
-## 7.13基于Open-iSCSI的后端存储
+# 7.13基于Open-iSCSI的后端存储
 
 存储池类型：iscsi
 
