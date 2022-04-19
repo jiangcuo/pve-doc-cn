@@ -30,3 +30,4 @@ Proxmox VE 的存储库（libpve-storage-perl 包）具有非常灵活的插件�
    rbd.md
    cephfs.md
    brtfs.md
+   zfsoveriscsi.md
