@@ -31,3 +31,4 @@ QQ群：904754537
    cluster/index.rst
    pmxcfs/index.rst
    Storage/index.rst
+   pveceph/index.rst
