@@ -41,3 +41,5 @@ Ceph 由多个守护进程组成，用作 RBD 存储：
 
    Precondition.md
    initceph.md
+   cephmon.md
+   cephmgr.md
