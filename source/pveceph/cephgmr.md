@@ -2,14 +2,14 @@
 
 Manager 守护程序与监视器一起运行。它提供了一个监控集群的接口。自Ceph luminous发布以来，至少需要一个ceph-mgr [ 15 ]守护进程。
 
-## 创建Ceph Manager
+## 8.4.1 创建Ceph Manager
 可以安装多个 Manager，但在任何给定时间只有一个 Manager 处于活动状态。
 
 `pveceph mgr create`
 
 提示：建议将Ceph Manager部署在monitor节点上。并考虑安装多个Cepn Manager，以满足高可用要求。
 
-## 8.6.2销毁Ceph Manager
+## 8.4.2 销毁Ceph Manager
 
 要通过 GUI 删除 Ceph 管理器，首先在树视图中选择一个节点，然后转到Ceph → Monitor面板。选择 Manager 并单击 Destroy按钮。
 
