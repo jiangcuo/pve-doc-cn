@@ -32,3 +32,4 @@ QQ群：904754537
    pmxcfs/index.rst
    Storage/index.rst
    pveceph/index.rst
+   storagereplication/index.rst
