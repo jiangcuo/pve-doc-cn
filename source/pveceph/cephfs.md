@@ -28,7 +28,7 @@ mds standby replay = true
 
 从Luminous（12.2.x）版本开始，可以有多个活动的元数据服务器同时运行，但这通常只在多个并发客户端的场景中有意义，MDS很少成为性能瓶颈。如果想使用该特性，情参考Ceph文档
 
-## 创建CephFS
+## 8.9.2 创建CephFS
 
 在Proxmox VE下，可以通过Web GUI、CLI、外部API接口等多种方式轻松创建CephFS。前置条件如下：
 
@@ -58,12 +58,19 @@ pveceph fs create --pg_num 128 --add-storage
 要完全且正确的删除CephFS，需要执行以下步骤：
 
 - 断开所有非Proxmox VE客户端的连接，（如虚拟机中的Cephfs）
+  
 - 禁用所有相关的 CephFS Proxmox VE 存储条目（以防止它被自动挂载）。
+  
 - 从您要销毁的 CephFS 上的来宾（例如 ISO）中删除所有已使用的资源。
+
+
 - 手动卸载所有集群节点上的 CephFS 存储
+
   - `umount /mnt/pve/<storage-name>`  storage-name是 Proxmox VE 中 CephFS 存储的名称。
+
 - 现在确保没有元数据服务器 ( MDS ) 正在为该 CephFS 运行，方法是停止或销毁它们。这可以通过 Web 界面或命令行界面完成，对于后者，您将发出以下命令：
   - `pveceph stop --service mds.NAME` 然后 `pveceph mds destroy NAME` 请注意，当一个活动的MDS停止或删除时，备用服务器将自动提升为活动的，因此最好先停止所有备用服务器。
+
 -  现在您可以使用以下命令销毁 CephFS
   - `pveceph fs destroy NAME --remove-storages --remove-pools` 这将彻底删除Cephfs池，并从Proxmox VE中删除存储
 
