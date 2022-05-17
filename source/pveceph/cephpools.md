@@ -53,13 +53,65 @@ pveceph pool create <name> --add_storages
 
 - Crush Rules
   
+  用于在集群中映射对象放置的规则。这些规则定义了数据在集群中的放置方式。有关基于设备的规则的信息，请参阅 Ceph CRUSH 和设备类。
   
 
-of PGs
+- of PGs
+  
+  池在创建时的pg数量
 
-Target Ratio
+- Target Ratio
 
-Target Size
+  池中预期的数据比率。PG 自动缩放器使用相对于其他比率集的比率。如果两者都设置 ，它优先于`Target Size`
 
-Min. # of PGs
+- Target Size
 
+  池中预期的估计数据量。PG 自动缩放器使用此大小来估计最佳 PG 计数。
+
+- Min. # of PGs
+
+  PG的最小数量，此设置用于微调该池的 PG 计数的下限。 PG Autoscale不会合并低于此阈值的 PG。
+
+
+## 8.6.2. 销毁池
+
+要通过 GUI 销毁池，请在树视图中选择一个节点，然后转到 Ceph → Pools面板。选择要销毁的池，然后单击Destroy 按钮。要确认池的销毁，您需要输入池名称。
+
+运行以下命令以销毁池。指定-remove_storages以同时删除关联的存储。
+
+```
+pveceph pool destroy <name>
+```
+
+- 注意
+   
+   - 删除pool的数据是一项后台任务，可能需要一些时间。您将注意到集群中的数据使用率正在减少。
+
+## 8.6.3. PG Autoscale
+
+PG Autoscale 允许集群预估存储在每个池中的数据量，并自动选择适当的 pg_num 值。它从 Ceph Nautilus 开始可用。
+
+需要激活 PG Autoscale Mode才能使调整生效。
+
+```
+ceph mgr module enable pg_autoscaler
+```
+
+自动缩放模式基于每个池进行配置，并具有以下选项
+
+- warn 
+  - 如果建议的pg_num值与当前值相差太大， 则会发出健康警告
+
+- on
+  - pg_num会自动调整，无需干预
+
+- off
+  - 不会自动调整pg_num， 即使当前的pg_num值不是最优值，也不会发出警告。
+
+可以使用`target_size`、`target_size_ratio`和`pg_num_min`选项调整缩放因子以优化未来的数据存储。
+
+- 注意
+  -  默认情况下，如果池的 PG 数量偏离 3 倍，自动所放弃会考虑调整它。这将导致数据放置发生相当大的变化，并可能在集群上引入高负载。
+
+
+您可以在Ceph-blog [New in Nautilus: PG merging and autotuning](https://ceph.io/rados/new-in-nautilus-pg-merging-and-autotuning/)中找到对 PG 自动缩放器的更深入介绍 。

@@ -2,7 +2,7 @@
 
 Ceph 对象存储守护进程(Ceph Object Storage Daemons)通过网络为Ceph存储对象。建议每个物理磁盘使用一个OSD。
 
-# 8.5.1 创建OSD
+## 8.5.1 创建OSD
 
 您可以通过 Proxmox VE Web 界面或通过 CLI 使用 pveceph创建 OSD 。例如：
 
