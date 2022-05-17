@@ -43,3 +43,20 @@ ID  CLASS WEIGHT  TYPE NAME
 ceph osd crush rule create-replicated <rule-name> <root> <failure-domain> <class>
 ```
 
+- rule-name		
+  - 规则名称，用于和pool关联（见GUI和CLI）
+
+- root
+  - 规则所属的CRUSH根名称（默认ceph root为“default”）
+
+- failure-domain
+  - 对象所属的故障域（通常为host）
+
+- class
+  - 要使用的OSD存储类名称（例如nvme，ssd，hdd）
+
+
+提示
+  
+  - 如果pool中已有数据，则现有数据将根据规则移动位置。这有可能对集群性能产生重大影响。你也可以新建一个存储池，然后将磁盘逐个迁移过去。
+
