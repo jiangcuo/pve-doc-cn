@@ -33,3 +33,4 @@ QQ群：904754537
    Storage/index.rst
    pveceph/index.rst
    storagereplication/index.rst
+   QemuKvm/index.rst
