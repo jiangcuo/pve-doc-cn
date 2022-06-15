@@ -20,4 +20,5 @@ Qemu能够模拟包括从ARM到sparc在内的一大批硬件设备，但Proxmox 
    :maxdepth: 2
 
    edandpd.md
+   vmconfig.md
 
