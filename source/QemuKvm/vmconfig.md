@@ -219,7 +219,7 @@ SUBSYSTEM=="cpu", ACTION=="add", TEST=="online", ATTR{online}=="0", ATTR{online}
 
 当为虚拟机分配内存时，至少要为主机保留1GB可用内存。
 
-### 10.2.7 网卡
+## 10.2.7 网卡
 
 虚拟机可以配置多个网卡，共有以下四种类型虚拟网卡可以选择使用：
 
@@ -255,7 +255,7 @@ Proxmox VE会为每一块虚拟网卡生成一个随机的MAC地址，以便虚�
 
 需要注意，当设置multiqueue参数值大于1时，网络流量增大会引发主机CPU和虚拟机CPU负载的升高。我们推荐仅在虚拟机需要处理大量网络数据包时启用该配置，例如用作路由器、反向代理或高负载HTTP服务器时。
 
-## 虚拟显示器
+### 虚拟显示器
 
 QEMU支持多种的虚拟化VGA硬件。如下：
 
@@ -449,8 +449,31 @@ qm set <vmid> -onboot 1
 
 如果需要在主机引导和引导第一个虚拟机之间有一个延迟，请参阅 Proxmox VE 节点管理部分。
 
-## 10.2.17. Qemu 访客代理
+## 10.2.17. Qemu 代理
 
+Qemu 代理是一种在 VM 内部运行的服务，在主机和虚拟机之间提供通信通道。它用于交换信息，并允许主机向虚拟机发出命令。
+
+例如，VM 摘要面板中的 IP 地址是通过Qemu代理获取的。
+
+或者在启动备份时，虚拟机通过Qemu代理被告知需要使用 fs-freeze 和 fs-thaw 命令同步未完成的写入。
+
+要使Qemu代理正常工作，必须执行以下步骤：
+
+- 在虚拟机中安装代理并确保它正在运行
+
+- 在 Proxmox VE 中的启用代理
+
+
+### 安装Qemu代理
+
+对于大多数 Linux 发行版，来宾代理可用在官方软件仓库中。该软件包通常被命名为qemu-guest-agent。
+
+对于Windows，它可以从[Fedora VirtIO驱动程序ISO](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso)安装。
+
+
+### 启用来宾代理通信
+
+可以在虚拟机的“选项”面板中勾选 QEMU Guest Agent。要使更改生效，必须冷启动虚拟机。
 
 
 
