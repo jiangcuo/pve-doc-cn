@@ -21,4 +21,9 @@ Qemu能够模拟包括从ARM到sparc在内的一大批硬件设备，但Proxmox 
 
    edandpd.md
    vmconfig.md
-
+   migrate.md
+   copyclone.md
+   template.md
+   vmgenid.md
+   importdisk.md
+   cloudinit.md
