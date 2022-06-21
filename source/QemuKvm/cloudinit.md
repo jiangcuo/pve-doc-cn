@@ -108,27 +108,27 @@ qm cloudinit dump 9000 user
 
 使用指定文件代替自动生成文件。
 
-- meta=<volume>
+- meta=`<volume>`
 
  将包含所有元数据的指定文件通过cloud-init传递给虚拟机。该文件提供指定configdrive2和nocluod信息。
 
-- network=<volume>
+- network=`<volume>`
 
  将包含所有网络配置数据的指定文件通过cloud-init传递给虚拟机。
 
-- user=<volume>
-
+- user=`<volume>
+`
  将包含所有用户配置数据的指定文件通过cloud-init传递给虚拟机。
 
-- cipassword: <string>
+- cipassword: `<string>`
 
  用户口令。通常推荐使用SSH密钥认证，不要使用口令方式认证。请注意，旧版Cloud-Init不支持口令hash加密。
 
-- citype: <configdrive2 | nocloud>
+- citype: `<configdrive2 | nocloud>`
 
  指定Cloud-Init配置数据格式。默认依赖于操作系统类型（ostype）。Linux可设置为nocloud，Windows可设置为configdrive2。
 
-- ciuser: <string>
+- ciuser: `<string>`
 
  指定用户名，同时不再使用镜像配置的默认用户。
 
@@ -142,31 +142,31 @@ qm cloudinit dump 9000 user
 
    如未设置IPv4或IPv6地址，Cloud-Init默认将使用IPv4的dhcp。
 
-- gw=<GatewayIPv4> IPv4的默认网关
+- gw=`<GatewayIPv4>` IPv4的默认网关
 
 - 注意
  - 要配合使用选项：ip
 
-- gw6=<GatewayIPv6> IPv6的默认网关
+- gw6=`<GatewayIPv6>` IPv6的默认网关
  
   注意:要配合使用选项：ip6
 
-- ip=<IPv4Format/CIDR> (default = dhcp) 
+- ip=`<IPv4Format/CIDR>` (default = dhcp) 
 
   IPv4地址，采用CIDR格式。
 
-- ip=<IPv6Format/CIDR> (default = dhcp) 
+- ip=`<IPv6Format/CIDR>` (default = dhcp) 
 
    IPv6地址，采用CIDR格式。
 
-- nameserver: <string>
+- nameserver: `<string>`
 
   为容器设置DNS服务器IP地址。如未设置searchdomian及nameserver，将自动采用服务器主机设置创建有关配置。
 
-- searchdomain: <string>
+- searchdomain: `<string>`
  
   为容器设置DNS搜索域。如未设置searchdomian及nameserver，将自动采用服务器主机设置创建有关配置。
 
-- sshkeys: <string>
+- sshkeys: `<string>`
 
   设置SSH公钥（每行设置一个key，OpenSSH格式）。
