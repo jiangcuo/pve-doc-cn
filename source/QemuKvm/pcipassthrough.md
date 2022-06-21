@@ -52,7 +52,7 @@ vfio_virqfd
 update-initramfs -u -k all
 ```
 
-## 完成配置
+### 完成配置
 
 配置完成后，需要重启以启用新配置。可用以下命令行查看新配置是否已启用。
 
@@ -182,4 +182,100 @@ Kernel driver in use: vfio-pci
 #### 其他注意事项
 
 为获得更好的兼容性，在直通GPU设备时，最好选择q35芯片组，并选择使用OVMF（针对虚拟机的EFI）代替SeaBIOS，选择PCIe代替PCI。注意，在使用OVMF时，同时需要准备好EFI ROM，否则还得使用SeaBIOS。
+
+
+## 10.9.3 SR-IOV
+
+另一种PCI(e)直通方法是利用设备自带的硬件虚拟化功能。当然，这需要硬件设备本身具备相应功能。
+
+SR-IOV（Single-Root Input/Output Virtualization）技术可以支持硬件同时提供多个VF（Virtual Function）供系统使用。每个VF都可以用于不同虚拟机，不仅可以提供硬件的全部功能，而且比软件虚拟化设备性能更好，延迟更低。
+
+目前，最常见的支持SR-IOV的设备是网卡（Network Interface Card）。能将单一物理端口虚拟化为多个VF，同时允许虚拟机调用校验卸载等等硬件特性，从而降低主机CPU负载。
+
+### 主机配置
+
+有两种方法可以启用硬件设备虚拟化功能VF。
+
+#### 1.设置启用驱动程序中的相应参数
+例如Intel驱动中的
+
+```
+max_vfs=4
+```
+
+该参数可以配置在/etc/modprobe.d/目录下的.conf配置文件中。（修改配置后不要忘记更新initramfs文件）
+
+参数的具体信息和设置方法可以查看驱动程序文档。
+
+#### 2.通过sysfs设置启用
+
+如果设备硬件和驱动程序支持，可以在线调整VF数量。例如，可以通过以下命令在设备0000:01:00.0上启用4个VF：
+
+```
+#echo 4 > /sys/bus/pci/devices/0000:01:00.0/sriov_numvfs
+```
+
+如果需要将该配置永久生效，可以安装‘sysfsutils’软件包，并在/etc/sysfs.conf中配置相关参数，或在/etc/sysfs.d/目录下专门创建.conf配置文件也可以。
+
+### 虚拟机配置
+
+创建VF后，可以运行lspci命令查看相应的PCI(e)设备信息，并根据相应设备ID进行直通配置，具体步骤可参考10.9.2 节普通PCI(e)设备直通配置。
+
+### 其他注意事项
+
+配置SR-IOV直通，硬件平台支持是尤为重要的。有可能首先要在BIOS/EFI中设置启用相关功能，或使用特定PCI(e)端口。如有疑问，还要咨询平台厂商或查看有关手册才可以。
+
+
+## 10.9.4中介设备（vGPU，GVT-g）
+
+中介设备（mediated device）也是一种实现硬件功能和性能复用的硬件虚拟化技术，多见于GPU虚拟化配置中，如Intel GVT-g和Nvidia vGPU。
+
+利用该技术，一个物理硬件设备可以创建多个虚拟设备，效果类似于SR-IOV。主要区别在于，中介设备不产生新的PCI(e)设备，并且只适用于虚拟机。
+
+### 主机配置
+
+首先，硬件卡需要支持中介设备技术。可以从厂商获取驱动以及相关配置文档。
+
+Intel的GVG-g驱动已经集成在Linux内核，并可以在第5、6、7代Intel Core CPU直接使用，在E3 v4、E3 v5和E3 v6版本的Xeon CPU上也可以直接使用。
+
+在Intel显卡上启用该技术，首先要确保已经加载kvmgt内核模块（例如将其写进配置文件/etc/modules），并按3.10.4节内核命令行相关内容，添加如下参数：
+
+```
+I915.enable_gvt=1
+```
+
+然后还要按10.9.1节内容更新initramfs，并重启服务器主机。
+
+### 虚拟机配置
+
+
+配置直通中介设备，只需要设置虚拟机的hostpciX参数的mdev属性即可。
+
+具体可以通过sysfs查看所支持的硬件设备。如下例，列出0000:00:02.0下所有的设备类型：
+
+```
+#ls /sys/bus/pci/devices/0000:00:02.0/mdev_supported_types
+```
+
+每个条目都是一个目录，其中需要关注的重要文件有：
+
+- available_instances
+
+用于记录当前可用的实例数量，每在虚拟机中使用一个mdev，该计数都会减1。
+
+- description
+
+  包含该类设备的功能简短描述
+
+- create
+
+  是一个功能点，用于创建该类设备。如果hostpciX的mdev属性被配置启用，Proxmox VE会自动调用该功能点。
+
+下面是针对Intel GVT-g vGPU（Intel Skylake 6700k）的配置示例：
+
+```
+qm set VMID -hostpci0 00:02.0,mdev=i915-GVTg_V5_4
+```
+
+执行以上命令后，Proxmox VE会在虚拟机启动时自动创建该设备，并在虚拟机停止时自动删除清理。
 

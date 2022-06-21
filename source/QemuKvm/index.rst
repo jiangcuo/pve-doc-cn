@@ -20,7 +20,7 @@ Qemu能够模拟包括从ARM到sparc在内的一大批硬件设备，但Proxmox 
    :maxdepth: 2
 
    edandpd.md
-   vmconfig.md
+   vmsetting.md
    migrate.md
    copyclone.md
    template.md
@@ -28,3 +28,7 @@ Qemu能够模拟包括从ARM到sparc在内的一大批硬件设备，但Proxmox 
    importdisk.md
    cloudinit.md
    pcipassthrough.md
+   hookscript.md
+   Hibernation.md
+   qm.md
+   vmconf.md
