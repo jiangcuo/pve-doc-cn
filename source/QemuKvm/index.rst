@@ -27,3 +27,4 @@ Qemu能够模拟包括从ARM到sparc在内的一大批硬件设备，但Proxmox 
    vmgenid.md
    importdisk.md
    cloudinit.md
+   pcipassthrough.md

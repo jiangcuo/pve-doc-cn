@@ -138,14 +138,12 @@ qm cloudinit dump 9000 user
 
   IP地址采用CIDR格式，网关为可选项，也采用CIDR格式IP形式设置。
 
-   在DHCP环境中可将IP地址设置为字符串dhcp，此时应将网关留空。在IPv6网络中，如需启用无状态自动配置，将IP设置为字符串auto即可。
+  在DHCP环境中可将IP地址设置为字符串dhcp，此时应将网关留空。在IPv6网络中，如需启用无状态自动配置，将IP设置为字符串auto即可。
 
-   如未设置IPv4或IPv6地址，Cloud-Init默认将使用IPv4的dhcp。
+  如未设置IPv4或IPv6地址，Cloud-Init默认将使用IPv4的dhcp。
 
 - gw=`<GatewayIPv4>` IPv4的默认网关
-
-- 注意
- - 要配合使用选项：ip
+  注意: 要配合使用选项：ip
 
 - gw6=`<GatewayIPv6>` IPv6的默认网关
  
