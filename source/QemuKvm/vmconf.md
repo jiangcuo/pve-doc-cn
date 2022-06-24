@@ -57,27 +57,27 @@ snaptime: 1457170803
 
 ## 10.13.3 虚拟机配置项目
 
-- acpi : <boolean> (default = 1 )
+- acpi : `<boolean> `(default = 1 )
   
   启用/禁用 ACPI。
 
-- agent: [enabled=]<1|0> [,fstrim_cloned_disks=<1|0>]
+- agent:` [enabled=]<1|0> [,fstrim_cloned_disks=<1|0>]`
 
   启用/禁用Qemu GuestAgent及其属性。
 
-- enabled=<boolean> (default = 0)
+- enabled=`<boolean>` (default = 0)
 
   启用/禁用Qemu GuestAgent。
 
-- fstrim_cloned_disks=<boolean> (default = 0)
+- fstrim_cloned_disks=`<boolean>` (default = 0)
 
   在克隆/迁移虚拟磁盘后运行fstrim。
 
-- arch: <aarch64 | x86_64>
+- arch: `<aarch64 | x86_64>`
 
   虚拟CPU架构。默认为host。
 
-- args : <string>
+- args :` <string>`
 
   传递给kvm的任意参数，例如：
   
@@ -87,51 +87,51 @@ snaptime: 1457170803
 
   注意:args仅供专家使用。
 
-- audio0: device=<ich9-intel-hda|intel-hda|AC97> [,driver=<spice|none>]
+- audio0: device=`<ich9-intel-hda|intel-hda|AC97>` [,driver=<spice|none>]
  
   配置虚拟声卡，与Spice/QXL配合很有用。
 
-  device=<ich9-intel-hda|intel-hda|AC97> 选择声卡的类型
+  device=`<ich9-intel-hda|intel-hda|AC97>` 选择声卡的类型
 
-  driver=<none | spice> (default = spice) 选择声卡的后端驱动，默认为spice
+  driver=`<none | spice> `(default = spice) 选择声卡的后端驱动，默认为spice
 
 
-- autostart : <boolean> (default = 0 )
+- autostart : `<boolean>` (default = 0 )
 
   虚拟机崩溃后自动启动（目前该属性会被自动忽略）
 
-- balloon : <integer> (0 -N)
+- balloon : `<integer>` (0 -N)
 
   为虚拟机配置的目标内存容量，单位为MB。设为0表示禁用ballon驱动程序。
   
-- bios : <ovmf | seabios> (default = seabios )
+- bios : `<ovmf | seabios>` (default = seabios )
 
   设置BIOS类型。
 
-- boot: [[legacy=]<[acdn]{1,4}>] [,order=<device[;device...]>]
+- boot: `[[legacy=]<[acdn]{1,4}>] [,order=<device[;device...]>]`
 
-  legacy=<[acdn]{1，4}> （default = cdn)，虚拟机启动顺序，软驱（a），硬盘（c），光驱（d），或网络（n）。现已弃用，请改用`order`
+  legacy=`<[acdn]{1，4}>` （default = cdn)，虚拟机启动顺序，软驱（a），硬盘（c），光驱（d），或网络（n）。现已弃用，请改用`order`
 
-  order=<device[;d evice...]>,虚拟机将按照此规则进行启动。磁盘、光驱和直通存储USB设备将直接从中启动，NIC将加载PXE，PCIe设备如果是磁盘（Nvme）就会启动或加载OPTION ROM（例如RAID控制器、硬件NIC）。
+  order=`<device[;d evice...]>`,虚拟机将按照此规则进行启动。磁盘、光驱和直通存储USB设备将直接从中启动，NIC将加载PXE，PCIe设备如果是磁盘（Nvme）就会启动或加载OPTION ROM（例如RAID控制器、硬件NIC）。
 
   注意，只有在这里被标记成可启动设备，才能由虚拟机的（BIOS/UEFI）加载。如果您需要多个磁盘进行引导（例如software-raid），则需要在此处指定所有磁盘。
   
   使用order将会忽略legacy的值
 
-- bootdisk: (ide|sata|scsi|virtio)\d+
+- bootdisk: `(ide|sata|scsi|virtio)\d+`
  
   指定启动磁盘，已经弃用，请使用 `boot: order=xx`
 
-- cdrom:<volume>
+- cdrom:`<volume>`
 
   光驱，相当于-ide2的别名。
 
-- cicustom: [meta=<volume>] [,network=<volume>] [,user=<volume>] [,vendor=<volume>]
+- cicustom: `[meta=<volume>] [,network=<volume>] [,user=<volume>] [,vendor=<volume>]
+`
+  - 使用指定文件代替自动生成文件。
 
-  使用指定文件代替自动生成文件。
+  - meta=`<volume>`，将包含所有元数据的指定文件通过cloud-init传递给虚拟机。该文件提供指定configdrive2和nocluod信息。
 
- - meta=<volume>，将包含所有元数据的指定文件通过cloud-init传递给虚拟机。该文件提供指定configdrive2和nocluod信息。
+  - network=`<volume>`，将包含所有网络配置数据的指定文件通过cloud-init传递给虚拟机。
 
- - network=<volume>，将包含所有网络配置数据的指定文件通过cloud-init传递给虚拟机。
-
- - user=<volume> ，将包含所有用户配置数据的指定文件通过cloud-init传递给虚拟机。
+  - user=`<volume>` ，将包含所有用户配置数据的指定文件通过cloud-init传递给虚拟机。
