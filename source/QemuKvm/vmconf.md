@@ -135,3 +135,43 @@ snaptime: 1457170803
   - network=`<volume>`，将包含所有网络配置数据的指定文件通过cloud-init传递给虚拟机。
 
   - user=`<volume>` ，将包含所有用户配置数据的指定文件通过cloud-init传递给虚拟机。
+
+- cipassword: `<string>`
+
+  Cloud-Init：用户口令。通常推荐使用SSH密钥认证，不要使用口令方式认证。请注意，旧版Cloud-Init不支持口令hash加密。
+
+- citype: `<configdrive2 | nocloud | opennebula>`
+
+  Cloud-Init：指定Cloud-Init配置数据格式。默认依赖于操作系统类型（ostype）。Linux可设置为nocloud，Windows可设置为configdrive2。
+
+- ciuser: `<string>`
+  
+  Cloud-Init：指定用户名，同时不再使用镜像配置的默认用户。
+
+- cores : <integer> (1 -N) (default = 1 )
+
+  每个插槽的CPU核心数量
+
+- cpu:` [[cputype=]<string>] [,flags=<+FLAG[;-FLAG...]>] [,hidden=<1|0>] [,hv-vendor-id=<vendor-id>] [,phys-bits=<8-64|host>] [,reported-model=<enum>]`
+
+  - 模拟CPU类型。
+
+  - cputype=`<string>` (default = kvm64)
+
+    模拟的CPU类型。可以使用默认类型，也可以自定义类型。自定义类型将以`custom-`开头。
+
+  - flags=`<+FLAG[;-FLAG...]>`
+
+    CPU标识列表，分隔符为分号“;”，启用标识使用+FLAG，禁用标识使用-FLAG。目前支持的标识有：pcid, spec-ctrl, ibpb, ssbd, virt-ssbd, amd-ssbd, amd-no-ssb, pdpe1gb,md-clear。
+
+  - hidden = `<boolean>` (default = 0 )
+  
+    设为1表示不标识为KVM虚拟机。
+
+  - hv-vendor-id=`<vendor-id>`
+  
+    Hyper-V厂商ID。Windows客户机的部分驱动或程序可能需要指定ID
+
+  - phys-bits=`<8-64|host>`
+ 
+    报告给客户机操作系统的物理内存地址位。应小于或等于主机的物理内存地址位。设置为 host 以使用主机 CPU 中的值
