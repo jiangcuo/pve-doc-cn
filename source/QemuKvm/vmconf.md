@@ -443,6 +443,259 @@ snaptime: 1457170803
   - werror=`<enospc | ignore | report | stop>`
 
     写错误处理方式。
+
   - wwn=`<wwn>`
 
     驱动器的唯一名称，使用16字节hex字符串表示，前缀为0x。
+
+- ipconfig[n]: `[gw=<GatewayIPv4>] [,gw6=<GatewayIPv6>] [,ip=<IPv4Format/CIDR>] [,ip6=<IPv6Format/CIDR>]`
+
+  loud-Init：为对应端口设置IP地址和网关。
+  IP地址采用CIDR格式，网关为可选项，也采用CIDR格式IP形式设置。
+  在DHCP环境中可将IP地址设置为字符串dhcp，此时应将网关留空。在IPv6网络中，如需启用无状态自动配置，将IP设置为字符串auto即可。
+  如未设置IPv4或IPv6地址，Cloud-Init默认将使用IPv4的dhcp。
+
+  - gw=`<GatewayIPv4>`
+    
+    IPv4的默认网关
+
+    注意：需要和ip配合使用
+
+  - gw6=`<GatewayIPv6>`
+  
+    IPv6的默认网关
+
+    注意：需要和ip6配合使用
+
+  - ip=`<IPv4Format/CIDR>` (default = dhcp) 
+
+    IPv4地址，采用CIDR格式。
+ 
+  - ip=`<IPv6Format/CIDR> `(default = dhcp) 
+
+    IPv6地址，采用CIDR格式。
+
+- ivshmem: size=`<integer>` [,name=<string>]
+
+  内部虚拟机共享内存。可实现虚拟机之间、主机虚拟机之间的直接通信。
+
+  - name=`<string>`
+
+    设备文件名称。会自动添加前缀pve-shm-。默认为虚拟机VMID，并将在虚拟机停止后自动删除。
+  
+  - size=`<integer>` (1 - N)
+
+    文件大小，单位MB。
+
+- keephugepages:` <boolean>` (default = 0)
+
+  与huepages一起使用。如果启用，则在 VM 关闭后不会删除大页，可用于后续启动。
+
+- keyboard: `<da | de | de-ch | en-gb | en-us | es | fi | fr | fr-be | fr-ca | fr-ch | hu | is | it | ja | lt | mk | nl | no | pl | pt | pt-br | sl | sv | tr>`
+
+  键盘布局设置，用于vnc服务器。默认采用/etc/pve/datacenter.conf中的设置值。 
+
+- kvm: `<boolean>` (default = 1)
+
+  启用/禁用KVM硬件虚拟化。
+
+- localtime: `<boolean>`
+
+  设置虚拟机时间是否采用服务器本地时间。如虚拟机操作系统类型为Microsoft OS，则默认启用该项。
+
+- lock: `<backup | clone | create | migrate | rollback | snapshot | snapshot-delete | suspended | suspending>`
+
+  锁定/解锁虚拟机。
+
+- machine: (pc|pc(-i440fx)?-\d+(\.\d+)+(\+pve\d+)?(\.pxe)?|q35|pc-q35-\d+(\.\d+)+(\+pve\d+)?(\.pxe)?|virt(?:-\d+(\.\d+)+)?(\+pve\d+)?)
+
+  设置Qemu虚拟机类型。
+
+- memory: `<integer> `(16 - N) (default = 512)
+
+  设置虚拟机内存容量，单位为MB。启用balloon驱动时，该值为最大可用内存值。
+
+- migrate_downtime: `<number> `(0 - N) (default = 0.1)
+
+  设置虚拟机在线迁移时最大停机时间（单位为秒）。
+  
+- migrate_speed: `<integer> `(0 - N) (default = 0)
+
+  设置虚拟机迁移时最大数据传输速度（单位为MB/s）。设为0表示不限速。
+
+- name: `<string>`
+
+  设置虚拟机名称。仅用于WebGUI界面。
+
+- nameserver: `<string>`
+
+  Cloud-Init：为容器设置DNS服务器IP地址。如未设置searchdomian及nameserver，将自动采用服务器主机设置创建有关配置。
+
+- net[n]: [model=]`<enum> `[,bridge=<bridge>] [,firewall=<1|0>] [,link_down=<1|0>] [,macaddr=<XX:XX:XX:XX:XX:XX>] [,mtu=<integer>] [,queues=<integer>] [,rate=<number>] [,tag=<integer>] [,trunks=<vlanid[;vlanid...]>] [,<model>=<macaddr>]
+
+  设置虚拟网络设备
+  
+  - bridge=`<bridge>`
+
+    虚拟网络设备桥接的虚拟交换机。Proxmox VE默认创建虚拟交换机名为vmbr0。
+    如未指定虚拟交换机，Proxmox VE将创建KVM网络设备（NAT），并提供DHCP和DNS服务。具体地址如下：
+    
+    - 10.0.2.2 Gateway
+    
+    - 10.0.2.3 DNS Server
+    
+    - 10.0.2.4 SMB Server
+    
+    其中DHCP服务器将从10.0.2.15开始分配IP地址
+
+  - firewall=`<boolean>`
+     
+    是否在此虚拟机网卡上启用防火墙功能。 
+  
+  - link_down=`<boolean>`
+
+    将此虚拟网卡设为断开状态。
+
+  - macaddr=`<XX:XX:XX:XX:XX:XX>`
+    
+    MAC地址。
+
+  - model=`<e1000 | e1000-82540em | e1000-82544gc | e1000-82545em | e1000e | i82551 | i82557b | i82559er | ne2k_isa | ne2k_pci | pcnet | rtl8139 | virtio | vmxnet3>`
+
+    虚拟网卡类型。其中virtio性能最好。若虚拟机不支持virtio，最好使用e1000。
+
+  - mtu=`<integer> `(1 - 65520)
+
+    只针对于virtio类型虚拟机网卡，强制设置mtu。设为1则继承网桥的mtu。
+
+  - queues=`<integer>` (0 - 16)
+
+    设置虚拟网卡的包队列数量。
+
+  - rate=`<number> `(0 - N)
+
+    虚拟网卡最大传输速度，单位为Mb/s。
+
+  - tag=`<integer> `(1 - 4094)
+
+    在此虚拟网卡的数据包上自动标记的vlan标签。
+
+  - trunks=`<vlanid[;vlanid...]>`
+
+    虚拟网卡上允许通过的vlan标签
+
+- numa: `<boolean> `(default = 0)
+
+  启用/禁用NUMA。
+
+- numa[n]: cpus=`<id[-id];...> [,hostnodes=<id[-id];...>] [,memory=<number>] [,policy=<preferred|bind|interleave>]`
+  
+  设置NUMA拓扑
+
+  - cpus=`<id[-id];...>`
+ 
+    当前NUMA节点上的CPU列表。
+
+  - hostnodes=`<id[-id];...>`
+
+    所采用的主机NUMA节点。
+
+  - memory=`<number>`
+
+    NUMA节点所提供的内存容量。
+
+  - policy=`<bind | interleave | preferred>`
+ 
+    NUMA分配策略
+
+- onboot: `<boolean> `(default = 0)
+
+  设置虚拟机是否在物理服务器启动时自动启动。
+
+- ostype:` <l24 | l26 | other | solaris | w2k | w2k3 | w2k8 | win10 | win11 | win7 | win8 | wvista | wxp>`
+
+  虚拟机操作系统类型。用于启用针对操作系统的优化和功能特性。可选值如下：
+
+  - other
+    
+    unspecified OS
+
+  - wxp
+  
+    Microsoft Windows XP
+
+  - w2k
+    
+    Microsoft Windows 2000
+
+  - w2k3
+    
+    Microsoft Windows 2003
+
+  - w2k8
+    
+    Microsoft Windows 2008
+
+  - wvista
+  
+    Microsoft Windows Vista
+
+  - win7
+  
+    Microsoft Windows 7
+
+  - win8
+  
+    Microsoft Windows 8/2012/2012r2
+
+  - win10
+ 
+    Microsoft Windows 10/2016/2019
+
+  - win11
+  
+    Microsoft Windows 11/2022
+
+  - l24
+  
+    Linux 2.4 Kernel
+
+  - l26
+   
+    Linux 2.6 - 5.X Kernel
+
+  - solaris
+
+     Solaris/OpenSolaris/OpenIndiania kernel
+
+- parallel[n]: /dev/parport\d+|/dev/usb/lp\d+
+
+  将物理主机并口设备映射给虚拟机(n的值为0-2)。
+  
+  注意：该属性允许虚拟机直接访问物理主机硬件。启用后将不能再进行虚拟机迁移操作，因此使用时务必小心。
+
+  警告：该特性仍处于试验阶段，有用户报告该属性会导致故障和问题。
+
+- protection: `<boolean>` (default = 0)
+
+  设置虚拟机保护标识。启用后将禁止删除虚拟机或虚拟机硬盘。
+
+- reboot: `<boolean>` (default = 1)
+
+  允许虚拟机重启。设为0后，虚拟机重启时将自动关闭。
+
+- rng0: `[source=]</dev/urandom|/dev/random|/dev/hwrng> [,max_bytes=<integer>] [,period=<integer>]`
+
+  配置基于 VirtIO 的随机数生成器。
+  
+  - max_bytes=`<integer>` (default = 1024)
+
+    每毫秒内允许向虚拟机内注入的最大熵字节数，使用/dev/random作为源时，首选较低的值。使用0禁用限制（可能很危险！）。
+
+  - period=`<integer>` (default = 1000)
+   
+    每隔几毫秒，熵注入配额就会重置，允许来宾检索另一个max_bytes熵。
+
+  - source=`</dev/hwrng | /dev/random | /dev/urandom>`
+
+    主机上要从中收集熵的文件。在大多数情况下， /dev/urandom应该优先于/dev/random以避免主机上的熵饥饿问题。使用 urandom 不会以任何有意义的方式降低安全性，因为它仍然是从真实熵中播种的，并且提供的字节很可能也会与来宾上的真实熵混合。/dev/hwrng可用于从主机传递硬件 RNG。
