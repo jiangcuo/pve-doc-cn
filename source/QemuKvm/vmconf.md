@@ -182,6 +182,267 @@ snaptime: 1457170803
     
     所选择的型号及厂商，将会传递给虚拟机，但必须选择QEMU支持的CPU模型。只有自定义CPU模型才能将自定义厂商ID传递给虚拟机，默认的CPU模型会始终传递自身的默认属性。
 
+- cpulimit :` <number>` (0 -128) (default = 0 )
     
-    
+  CPU配额上限值。
 
+  注意：如果一台计算机有2个CPU，那么该计算机一共有2份额的CPU时间片可以分配。设为0表示不限制CPU配额。
+    
+- cpuunits : `<integer> `(2 -262144) (default = cgroup v1: 1024, cgroup v2: 100 )
+
+  虚拟机的CPU时间片分配权重值。该参数供内核的公平调度器使用。设定的权重值越大，虚拟机得到的CPU时间片越多。最终分配得到的时间片由该虚拟机权重和所有其他虚拟机权重总和之比决定。
+
+- description : `<string>`
+
+  虚拟机描述信息。仅供WebGUI使用。在虚拟机配置文件中以注释形式保存。
+
+- efidisk0 :` [file=]<volume> [,efitype=<2m|4m>] [,format=<enum>] [,pre-enrolled-keys=<1|0>] [,size=<DiskSize>]`
+
+  配置用于存储 EFI 变量的磁盘。使用特殊语法 STORAGE_ID:SIZE_IN_GiB 分配新卷。请注意，此处忽略 SIZE_IN_GiB，而是将默认 EFI 变量复制到卷中。
+
+  - efitype=`<2m | 4m>` (default = 2m)
+
+    EFI变量的大小，4m最新且推荐使用，用于安全启动。为了向后兼容性，如果没有制定，则使用2m。
+
+  - file=`<volume>`
+
+    EFI虚拟硬盘所基于的存储服务卷名称。
+
+  - format = `<cloop | cow | qcow | qcow2 | qed | raw | vmdk>`
+    
+    EFI虚拟硬盘所采用的存储格式。
+
+  - pre-enrolled-keys=`<boolean>` (default = 0)
+  
+    预注册密钥。如果与efitype=4m 一起使用，则使用EFI模板并注册特定于分发的密钥和 Microsoft 标准密钥。请注意，这将默认启用安全启动，但仍可以从VM中BIOS将其关闭。
+
+  - size = `<DiskSize>`
+    
+    EFI虚拟硬盘容量。仅供显示使用，并不能影响实际容量大小。
+  
+- freeze : `<boolean>`
+
+  虚拟机启动时自动冻结CPU（使用监视器命令c可继续启动过程）。
+
+- hookscript: `<string>`
+
+  回调脚本，将在虚拟机生命周期的各个步骤中执行的脚本。如启动阶段，关闭阶段。
+
+- hostpci[n]: [host=]<HOSTPCIID[;HOSTPCIID2...]> [,mdev=<string>][,pcie=<1|0>] [,rombar=<1|0>] [,romfile=<string>] [,x-vga=<1|0>]
+
+  将物理主机PCI设备映射给虚拟机。
+
+    注意：该属性允许虚拟机直接访问物理主机硬件。启用后将不能再进行虚拟机迁移操作，因此使用时务必小心
+
+    警告：该特性仍处于试验阶段，有用户报告该属性会导致故障和问题。
+
+  - host = <HOSTPCIID[;HOSTPCIID2...]>
+  
+    将PCI设备直通虚拟机使用。可指定一个或一组设备的PCI ID。HOSTPCIID格式为“总线号:设备号.功能号“（16进制数字表示），具体可使用lspci命令查看。
+
+  - mdev=<string>
+    
+    表示中介设备类型。虚拟机启动时会自动创建设备，停止时自动删除清理。
+
+  - pcie = <boolean> (default = 0 )
+    
+    标明是否是PCI-express类型总线（用于q35类型计算机）。
+
+  - rombar = <boolean> (default = 1 )
+  
+    标明是否将设备ROM映射至虚拟机内存空间。
+
+  - romfile=<string>
+  
+    pci设备的rom文件名（文件需要保存在/usr/share/kvm/下）。
+
+  - x-vga = <boolean> (default = 0 )
+    
+    标明是否启用vfio-vga设备支持。
+
+- hotplug : <string> (default = network,disk,usb )
+
+  设置启用的热插拔设备类型。启用热插拔的设备类型之间用英文逗号字符分隔，
+  可选参数值包括network，disk，cpu，memory和usb。设为0表示禁用热插拔，
+  设为1表示启用默认值network,disk,usb.
+
+- hugepages : <1024 | 2 | any>
+
+  启用/禁用巨型页。
+
+- ide[n]: [file=]<volume> [,aio=<native|threads|io_uring>] [,backup=<1|0>] [,bps=<bps>] [,bps_max_length=<seconds>] [,bps_rd=<bps>] [,bps_rd_max_length=<seconds>] [,bps_wr=<bps>] [,bps_wr_max_length=<seconds>] [,cache=<enum>] [,cyls=<integer>] [,detect_zeroes=<1|0>] [,discard=<ignore|on>] [,format=<enum>] [,heads=<integer>] [,iops=<iops>] [,iops_max=<iops>] [,iops_max_length=<seconds>] [,iops_rd=<iops>] [,iops_rd_max=<iops>] [,iops_rd_max_length=<seconds>] [,iops_wr=<iops>] [,iops_wr_max=<iops>] [,iops_wr_max_length=<seconds>] [,mbps=<mbps>] [,mbps_max=<mbps>] [,mbps_rd=<mbps>] [,mbps_rd_max=<mbps>] [,mbps_wr=<mbps>] [,mbps_wr_max=<mbps>] [,media=<cdrom|disk>] [,model=<model>] [,replicate=<1|0>] [,rerror=<ignore|report|stop>] [,secs=<integer>] [,serial=<serial>] [,shared=<1|0>] [,size=<DiskSize>] [,snapshot=<1|0>] [,ssd=<1|0>] [,trans=<none|lba|auto>] [,werror=<enum>] [,wwn=<wwn>]
+
+  配置IDE类型虚拟硬盘或光驱（n的值为0-3）。使用STORAGE_ID:SIZE_IN_GiB语法去分配虚拟硬盘
+ 
+  - aio=<io_uring | native | threads>
+
+    指定异步io模型。默认为io_uring
+
+  - backup=<boolean>
+
+    设置虚拟硬盘在进行虚拟机备份时是否被纳入备份范围。
+
+  - bps=<bps>
+
+    最大读写操作速度，单位为字节/秒。
+
+  - bps_max_length=<seconds>
+
+    突发读写操作最大时间长度，单位为秒。
+
+  - bps_rd=<bps>
+
+    最大读操作速度，单位为字节/秒。
+
+  - bps_rd_max_length=<seconds>
+
+    突发读操作最大时间长度，单位为秒。
+
+  - bps_wr=<bps>
+ 
+    最大写操作速度，单位为字节/秒
+
+  - bps_wr_max_length=<seconds>
+
+    突发写操作最大时间长度，单位为秒。
+
+  - cache=<directsync | none | unsafe | writeback | writethrough>
+
+    虚拟硬盘缓存工作模式
+
+  - cyls=<integer>
+
+    强制指定虚拟硬盘物理几何参数中的cylinder值
+
+  - detect_zeroes=<boolean>
+
+    设置是否检测并优化零写入操作。
+
+  - discard=<ignore | on>
+
+    设置是否向下层存储服务传递discard/trim操作请求。
+
+  - file=<volume>
+
+    IDE虚拟硬盘所基于的存储服务卷名称。
+
+  - format=<cloop | cow | qcow | qcow2 | qed | raw | vmdk>
+
+    IDE虚拟硬盘所采用的存储格式。
+
+  - heads=<integer>
+
+    强制指定虚拟硬盘物理几何参数中的head值。
+
+  - iops=<iops>
+
+    最大读写I/O速度，单位为个/秒。
+
+  - iops_max=<iops>
+
+    最大无限制读写I/O速度，单位为个/秒。
+
+  - iops_max_length=<seconds>
+
+    突发读写操作最大时间长度，单位为秒。
+
+  - iops_rd=<iops>
+
+    最大读I/O速度，单位为个/秒。
+
+  - iops_rd_max=<iops>
+
+    最大无限制读I/O速度，单位为个/秒。
+
+  - iops_rd_max_length=<seconds>
+
+    突发读操作最大时间长度，单位为秒。
+
+  - iops_wr=<iops>
+     
+    最大写I/O速度，单位为个/秒。
+
+  - iops_wr_max=<iops>
+
+    最大无限制写I/O速度，单位为个/秒。
+
+  - iops_wr_max_length=<seconds>
+
+    突发读操作最大时间长度，单位为秒。
+
+  - mbps=<mbps>
+
+    最大读写操作速度，单位为MB/秒。
+
+  - mbps_max=<mbps>
+
+    最大无限制读写操作速度，单位为MB/秒。
+
+  - mbps_rd=<mbps>
+
+    最大读操作速度，单位为MB/秒。
+
+  - mbps_rd_max=<mbps>
+
+    最大无限制读操作速度，单位为MB/秒。
+
+  - mbps_wr=<mbps>
+
+    最大写操作速度，单位为MB/秒。
+
+  - mbps_wr_max=<mbps>
+    
+    最大无限制写操作速度，单位为MB/秒。
+
+  - media=<cdrom | disk> (default = disk)
+
+    虚拟硬盘驱动器介质类型。
+
+  - model=<model>
+
+    虚拟硬盘的模型名，基于url编码格式，最大40字节。
+
+  - replicate=<boolean> (default = 1)
+
+    磁盘是否被调度复制。
+
+  - rerror=<ignore | report | stop>
+
+    读错误处理方式。
+
+  - secs=<integer>
+
+    强制指定虚拟硬盘物理几何参数中的sector值。
+
+  - serial=<serial>
+ 
+    虚拟硬盘的序列号，基于url编码格式，最大20字节。
+
+  - shared=<boolean> (default = 0)
+
+    将本地管理卷标记为所有节点均可用。
+    
+    注意：该选项并不自动共享卷，只是假定该卷已经被共享。
+
+  - size=<DiskSize>
+
+    虚拟硬盘容量。仅供显示使用，并不能影响实际容量大小。
+
+  - snapshot=<boolean>
+
+    Qemu快照功能控制选项。设置后，对磁盘的改写会被当成临时的，并在虚拟机重启后全部丢弃。
+  
+  - ssd=<boolean>
+
+    设置虚拟磁盘连接到虚拟机的方式，SSD或硬盘。
+
+  - trans=<auto | lba | none>
+
+    设置虚拟硬盘几何参数地址bios解释模式。
+
+  - werror=<enospc | ignore | report | stop>
+
+    写错误处理方式。
+  - wwn=<wwn>
+
+    驱动器的唯一名称，使用16字节hex字符串表示，前缀为0x。
