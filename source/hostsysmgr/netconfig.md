@@ -20,8 +20,6 @@ Proxmox VE 不会将更改直接写入 `/etc/network/interfaces·。相反，我
 
 **安装 ifupdown2 将删除 ifupdown，但由于版本 0.8.35+pve1 之前的 ifupdown 的删除脚本存在一个问题，即网络在删除时完全停止 [1] 您必须确保您拥有最新的 ifupdown 软件包版本。**
 
-安装 `ifupdown2` 将删除 `ifupdown`，但由于版本 `0.8.35+pve1` 之前的 `ifupdown` 的删除脚本存在一个问题，即网络在删除时完全停止 [1] 您必须确保您拥有最新的 `ifupdown` 软件包版本。
-
 对于安装本身，您可以简单地执行以下操作：
 
 `apt install ifupdown2`
