@@ -94,9 +94,6 @@ proxmox-boot-tool kernel add 5.0.15-1-pve
 
 ```proxmox-boot-tool ```内核列表将列出当前选择用于引导的所有内核版本：
 
-```
-proxmox-boot-tool 内核列表将列出当前选择用于引导的所有内核版本：
-```
 
 运行 proxmox-boot-tool kernel remove 以从手动选择的内核列表中删除内核，例如：
 
