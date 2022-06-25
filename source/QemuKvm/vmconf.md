@@ -175,3 +175,13 @@ snaptime: 1457170803
   - phys-bits=`<8-64|host>`
  
     报告给客户机操作系统的物理内存地址位。应小于或等于主机的物理内存地址位。设置为 host 以使用主机 CPU 中的值
+ 
+  - reported-model=`<enum>`
+   
+    486 | Broadwell | Broadwell-IBRS | Broadwell-noTSX | Broadwell-noTSX-IBRS | Cascadelake-Server | Cascadelake-Server-noTSX | Conroe | EPYC | EPYC-IBPB | EPYC-Rome | Haswell | Haswell-IBRS | Haswell-noTSX | Haswell-noTSX-IBRS | Icelake-Client | Icelake-Client-noTSX | Icelake-Server | Icelake-Server-noTSX | IvyBridge | IvyBridge-IBRS | KnightsMill | Nehalem | Nehalem-IBRS | Opteron_G1 | Opteron_G2 | Opteron_G3 | Opteron_G4 | Opteron_G5 | Penryn | SandyBridge | SandyBridge-IBRS | Skylake-Client | Skylake-Client-IBRS | Skylake-Client-noTSX-IBRS | Skylake-Server | Skylake-Server-IBRS | Skylake-Server-noTSX-IBRS | Westmere | Westmere-IBRS | athlon | core2duo | coreduo | host | kvm32 | kvm64 | max | pentium | pentium2 | pentium3 | phenom | qemu32 | qemu64  (default = kvm64)
+    
+    所选择的型号及厂商，将会传递给虚拟机，但必须选择QEMU支持的CPU模型。只有自定义CPU模型才能将自定义厂商ID传递给虚拟机，默认的CPU模型会始终传递自身的默认属性。
+
+    
+    
+
