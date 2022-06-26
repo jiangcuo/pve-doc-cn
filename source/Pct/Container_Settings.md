@@ -62,3 +62,76 @@ pct cpusets
   该参数项是传递给内核调度器的一个相对权重值。参数值越大，容器得到的CPU时间越多。
   
   具体得到的CPU时间片由当前容器权重占全部容器权重总和的比重决定。该参数默认值为1024，可以调大该参数以提高容器的优先权。
+
+## 11.4.3 内存
+
+容器内存由cgroup内存控制器管理。
+
+- memory：容器的内存总占用量上限。对应于cgroup的memory.limit_in_bytes参数项。
+
+- swap：	用于设置允许容器使用主机swap空间的大小。对应于cgroup的memory.memsw.limit_in_bytes参数项，cgroup的参数实际上是内存和交换分区容量之和（memory+swap）。
+
+## 11.4.4 挂载点
+
+容器的根挂载点通过rootfs属性配置。除此之外，你还可以再配置256个挂载点，分别对应于参数mp0到mp255。具体设置项目如下：
+
+- rootfs:` [volume=]<volume> [,acl=<1|0>] [,mountoptions=<opt[;opt...]>] [,quota=<1|0>] [,replicate=<1|0>] [,ro=<1|0>] [,shared=<1|0>] [,size=<DiskSize>]`
+
+  配置容器根文件系统存储卷。全部配置参数见后续内容。
+
+- mp[n]:` [volume=]<volume> ,mp=<Path> [,acl=<1|0>] [,backup=<1|0>] [,mountoptions=<opt[;opt...]>] [,quota=<1|0>] [,replicate=<1|0>] [,ro=<1|0>] [,shared=<1|0>] [,size=<DiskSize>]`
+  
+  配置容器附加挂载点存储卷。使用STORAGE_ID:SIZE_IN_GiB语法分配新的存储卷。
+
+  - acl=`<boolean>`
+    
+    启用/禁用acl。
+  
+  - backup=`<boolean>`
+    
+    用于配置在备份容器时是否将挂载点纳入备份范围。（仅限于附加挂载点）
+
+  - `[,mountoptions=<opt[;opt...]>]`
+    
+    rootfs/mps挂载点的附加参数
+
+  - mp=`<Path>`
+    
+    存储卷在容器内部的挂载点路径。
+
+    - 注意: 出于安全性考虑，禁止含有文件链接。
+
+  - quota=`<boolean>`
+    
+    在容器内启用用户空间配额（对基于zfs子卷的存储卷无效）。
+
+  - replicate=`<boolean> `(default = 1)
+  
+    卷是否被可以被调度任务复制。
+
+  - ro=`<boolean>`
+
+    用于标识只读挂载点。
+
+  - shared=`<boolean> `(default = 0)
+
+    用于标识当前存储卷挂载点对所有节点可见。
+    
+    - 警告：设置该参数不等于自动共享挂载点，而仅仅表示当前挂载点被假定已经共享。
+
+  - size=`<DiskSize>`
+  
+    存储卷容量（参数值只读）。
+
+  - volume=`<volume>`
+
+    存储卷命令，即挂载到容器的设备或文件系统路径。
+
+目前主要有3类不同的挂载：基于存储服务的挂载，绑定挂载，设备挂载。
+
+### 容器rootfs典型配置示例
+
+```
+rootfs: thin1:base-100-disk-1,size=8G
+```
+
