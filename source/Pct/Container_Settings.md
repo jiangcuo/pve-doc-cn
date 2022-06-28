@@ -135,3 +135,118 @@ pct cpusets
 rootfs: thin1:base-100-disk-1,size=8G
 ```
 
+### 基于存储服务的挂载
+
+基于存储服务的挂载由Proxmox VE的存储子系统管理，一共有3种不同方式：
+
+- 硬盘镜像：也就是内建了ext4文件系统的硬盘镜像。
+
+- ZFS存储卷：技术上类似于绑定挂载，但通过Proxmox VE存储子系统管理，并且支持容量扩充和快照功能。
+
+- 目录：可以设置size=0禁止创建硬盘镜像，直接创建目录存储。
+
+注意：可以STORAGE_ID:SIZE_IN_GB的形式在指定存储上创建指定大小的卷。例如，执行
+  
+```
+pct set 100 –mp0 thin1:10,mp=/path/in/container
+```
+  
+将在存储thin1上创建10GB大小的卷，并将卷ID替换为分配卷ID，同时在容器内的`=/path/in/container`创建挂载点。
+
+### 绑定挂载
+
+绑定挂载可以将Proxmox VE主机上的任意目录挂载到容器使用。可行的使用方法有：
+
+- 在容器中访问主机目录
+
+- 在容器中访问主机挂载的USB设备
+
+- 在容器中访问主机挂载的NFS存储
+
+绑定挂载并不由Proxmox VE存储子系统管理，因此你不能创建快照或在容器内启用配额管理。在非特权容器内，你可能会因为用户映射关系和不能配置ACL而遇到权限问题。
+
+- 注意:
+  
+  vzdump将不会备份绑定挂载设备上的数据。
+
+- 警告:
+  
+  出于安全性考虑，最好为绑定挂载创建专门的源目录路径，例如在/mnt/bindmounts下创建的目录。永远不要将/，/var或/etc等系统目录直接绑定挂载给容器使用，否则将可能带来极大的安全风险。
+
+- 注意:
+  
+  绑定挂载的源路径必须没有任何链接文件。
+
+例如，要将主机目录/mnt/bindmounts/shared挂载到ID为100的容器中的/shared下，可在配置文件/etc/pve/lxc/100.conf中增加一行配置信息p0:/mnt/bindmounts/shared, mp=/shared。或者运行命令pct set 100 -mp0 /mnt/bindmounts/shared,mp=/shared也可以达到同样效果。
+
+### 设备挂载
+
+设备挂载可以将Proxmox VE上的块存储设备直接挂载到容器中使用。和绑定挂载类似，设备挂载也不由Proxmox VE存储子系统管理，但用户仍然可以配置使用quota和acl等功能。
+
+- 注意:
+
+  设备挂载仅在非常特殊的场景下才值得使用，大部分情况下，基于存储服务的挂载能提供和设备挂载几乎一样的功能和性能，同时还提供更多的功能特性。
+
+- 注意:
+
+  vzdump将不会备份设备挂载上的数据。
+
+## 11.4.5 网络
+
+单个容器最多支持配置10个虚拟网卡设备，其名称分别为net0到net9，并支持以下配置参数项：
+
+- net[n]: `name=<string> [,bridge=<bridge>] [,firewall=<1|0>] [,gw=<GatewayIPv4>] [,gw6=<GatewayIPv6>] [,hwaddr=<XX:XX:XX:XX:XX:XX>][,ip=<(IPv4/CIDR|dhcp|manual)>] [,ip6=<(IPv6/CIDR|auto|dhcp|manual)>] [,mtu=<integer>] [,rate=<mbps>] [,tag=<integer>] [,trunks=<vlanid;vlanid...]>] [,type=<veth>]`
+
+  为容器配置虚拟网卡设备。
+
+	- bridge=`<bridge>`
+	  
+    虚拟网卡设备连接的虚拟交换机。
+
+	- firewall=`<boolean>`
+	
+    设置是否在虚拟网卡上启用防火墙策略。
+	
+  - gw=`<GatewayIPv4>`
+	
+    IPv4通信协议的默认网关。
+	
+  - gw6=`<GatewayIPv6>`
+	
+    IPv6通信协议的默认网关。
+	
+  - hwaddr=`<XX:XX:XX:XX:XX:XX>`
+	
+    虚拟网卡的MAC地址。
+	
+  - ip=`<(IPv4/CIDR|dhcp|manual)>`
+	
+    IPv4地址，以CIDR格式表示。	
+	
+  - ip6=`<(IPv6/CIDR|auto|dhcp|manual)>`
+	
+    IPv6地址，以CIDR格式表示。	
+	
+  - mtu=`<integer>` (64 -N)
+	
+    虚拟网卡的最大传输单元。（lxc.network.mtu）
+	
+  - name=`<string>`
+  
+    容器内可见的虚拟网卡名称。（lxc.network.name）
+
+	- rate=`<mbps>`
+
+  	虚拟网卡的最大传输速度。
+	
+  - tag=`<integer> `(1 -4094)
+	  
+    虚拟网卡的VLAN标签。
+	
+  - trunks=`<vlanid[;vlanid...]>`
+	
+    虚拟网卡允许通过的VLAN号。
+	
+  - type=`<veth>`
+	
+    虚拟网卡类型。
