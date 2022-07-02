@@ -31,5 +31,7 @@ Proxmox VE使用Linux Containers（LXC）作为其底层容器技术。“Proxmo
    Container_Storage.md
    Replication_of_Containers_mount_points.md
    Managing_Containers_with_pct.md
-   
+   Migration.md
+   Configuration.md
+   locks.md
 
