@@ -1,22 +1,22 @@
 #  11.5 安全注意事项
 
-容器使用宿主机内核，因此这具有不安全性。通常，KVM虚拟机提供了更好的隔离。请不要将容器暴露给不信任的环境。
+由于容器直接使用主机Linux内核，所以恶意用户可利用的攻击面非常宽泛。如果你计划向不可信的用户提供容器服务，必须认真考虑该问题。一般来说，基于全虚拟化的虚拟机能够达到更好的隔离效果。
 
-为了减少漏洞攻击，LXC 使用了许多安全功能，例如 AppArmor、CGroups 和内核命名空间。
+好消息是，LXC利用了Linux内核的众多安全特性，例如AppArmor、CGroups以及PID和用户namespaces，这大大改善了容器的使用安全性。
 
 
 ## 11.5.1 AppArmor
 
-`AppArmor`可以拒绝用户的一个高危操作，如一些系统调用（mount），会被禁止执行。
+AppArmor配置文件用于限制对可能存在危险的操作的访问。某些系统调用(即mount)被禁止执行。
 
-要跟踪 AppArmor 活动，请使用下面命令：
+要跟踪AppArmor活动，请使用：
 ```
 dmesg | grep apparmor
 ```
 
-可以对容器禁用AppArmor，这是不推荐的，因为这带来了安全风险。如果系统配置错误或存在 LXC 或 Linux 内核漏洞，某些系统调用在容器内执行时可能会导致权限提升。
+尽管不建议使用AppArmor，可以对容器禁用AppArmor。但这就带来了安全风险。如果系统配置错误或存在LXC或Linux内核漏洞，则某些syscall在容器内执行时可能会导致权限提升。
 
-要为容器禁用 AppArmor，请将以下行添加到位于/etc/pve/lxc/CTID.conf的容器配置文件中：
+要禁用容器的AppArmor，请将以下行添加到位于/etc/pve/lxc/CTID.conf的容器配置文件中：
 
 ```
 lxc.apparmor.profile = unconfined
