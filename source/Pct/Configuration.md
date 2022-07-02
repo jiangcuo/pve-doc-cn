@@ -267,38 +267,39 @@ rootfs: `[volume=]<volume> [,acl=<1|0>][,mountoptions=<opt[;opt...]>] [,quota=<1
   
   为容器配置根文件系统卷。
   
-  acl=`<boolean>`
+  - acl=`<boolean>`
 
-	设置启用或禁用ACL。
+	  设置启用或禁用ACL。
 
-  `[,mountoptions=<opt[;opt...]>]`
+  - `[,mountoptions=<opt[;opt...]>]`
     
     rootfs/mps挂载点的附加参数
 
-  quota=`<boolean>`
+  - quota=`<boolean>`
 
-	在容器内启用用户空间配额（对基于zfs子卷的存储卷无效）。
+	  在容器内启用用户空间配额（对基于zfs子卷的存储卷无效）。
 
-  replicate=`<boolean>` (default = 1)
+  - replicate=`<boolean>` (default = 1)
 
     设置卷是否可以被调度任务复制。
-  ro=`<boolean>`
+  
+  - ro=`<boolean>`
 
     用于标识只读挂载点。
   
-  shared=`<boolean>` (default = 0)
+  - shared=`<boolean>` (default = 0)
 
-	设置非卷挂载点为所有节点可共享。
+	  设置非卷挂载点为所有节点可共享。
 
-    - 警告 
+      警告 
       
       设置该参数不等于自动共享挂载点，而仅仅表示当前挂载点被假定已经共享。
 
-  size=`<DiskSize>`
+  - size=`<DiskSize>`
     
     挂载点存储卷容量（参数值只读）。
 	
-  volume=`<volume>`
+  - volume=`<volume>`
 
   	挂载到容器的卷、设备或目录。
  
