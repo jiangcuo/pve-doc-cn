@@ -201,7 +201,7 @@ net[n]: `name=<string> [,bridge=<bridge>] [,firewall=<1|0>] [,gw=<GatewayIPv4>] 
   
   bridge=`<bridge>`
 
-	虚拟网卡设备连接的虚拟交换机。
+	  虚拟网卡设备连接的虚拟交换机。
 
   firewall=`<boolean>`
 	
@@ -209,39 +209,39 @@ net[n]: `name=<string> [,bridge=<bridge>] [,firewall=<1|0>] [,gw=<GatewayIPv4>] 
   
   gw=`<GatewayIPv4>`
 
-	IPv4通信协议的默认网关。
+	  IPv4通信协议的默认网关。
 
   gw6=`<GatewayIPv6>`
 
-	IPv6通信协议的默认网关。
+	  IPv6通信协议的默认网关。
   
   hwaddr=`<XX:XX:XX:XX:XX:XX>`
 
-	虚拟网卡的MAC地址。
+	  虚拟网卡的MAC地址。
 
   ip=`<(IPv4/CIDR|dhcp|manual)>`
 
-	IPv4地址，以CIDR格式表示。	
+	  IPv4地址，以CIDR格式表示。	
   
   ip6=`<(IPv6/CIDR|auto|dhcp|manual)>`
 
-	IPv6地址，以CIDR格式表示。	
+	  IPv6地址，以CIDR格式表示。	
 
   mtu=`<integer> `(64 -N)
 
-	虚拟网卡的最大传输单元。（lxc.network.mtu）
+	  虚拟网卡的最大传输单元。（lxc.network.mtu）
 
   name=`<string>`
 
-	容器内可见的虚拟网卡名称。（lxc.network.name）
+	  容器内可见的虚拟网卡名称。（lxc.network.name）
 
   rate=`<mbps>`
 
-	虚拟网卡的最大传输速度。
+	  虚拟网卡的最大传输速度。
 
   tag=`<integer>` (1 -4094)
 
-	虚拟网卡的VLAN标签。
+	  虚拟网卡的VLAN标签。
   
   trunks=`<vlanid[;vlanid...]>`
     
@@ -249,7 +249,7 @@ net[n]: `name=<string> [,bridge=<bridge>] [,firewall=<1|0>] [,gw=<GatewayIPv4>] 
   
   type=`<veth>`
 
-	虚拟网卡类型。
+	  虚拟网卡类型。
 
 onboot: `<boolean>` (default = 0)
   
@@ -300,32 +300,32 @@ rootfs: `[volume=]<volume> [,acl=<1|0>][,mountoptions=<opt[;opt...]>] [,quota=<1
 	
   volume=`<volume>`
 
-	挂载到容器的卷、设备或目录。
-
-searchdomain: `<string>`
+  	挂载到容器的卷、设备或目录。
+ 
+*searchdomain: `<string>`*
 
   设置容器的DNS搜索域。如未指定nameserver和searchdomain，将在创建容器时直接使用主机的相关配置。
 
-startup: `[[order=]\d+] [,up=\d+] [,down=\d+] `
+*startup: `[[order=]\d+] [,up=\d+] [,down=\d+] `*
   
   启动和关闭行为设置。参数order为非负整数，用于定义启动顺序。关闭顺序和启动顺序相反。此外还可以设置启动延时秒数，以指定下一个虚拟机启动或关闭之前的时间间隔。
 
-swap: `<integer> `(0 -N) (default = 512)
+*swap: `<integer> `(0 -N) (default = 512)*
   
   分配给容器的SWAP容量，单位为MB。
 
-template: `<boolean>` (default = 0)
+*template: `<boolean>` (default = 0)*
  
   启用/禁用模板
 
-tty: `<integer> `(0 -6) (default = 2)
+*tty: `<integer> `(0 -6) (default = 2)*
   
   指定容器可用的tty数量。
 
-unprivileged:` <boolean> `(default = 0)
+* unprivileged:` <boolean> `(default = 0)*
   
   设置容器以非特权用户权限运行。（不要手工修改该配置）
 
-unused[n]:` <string>`
+* unused[n]:` <string>` *
   
   标识未使用的存储卷。仅供Proxmox VE内部使用，不要手工修改该配置。
