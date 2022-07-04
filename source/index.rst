@@ -36,3 +36,4 @@ QQ群：904754537
    QemuKvm/index.rst
    Pct/index.rst
    SDN/index.rst
+   Firewall/index.rst
