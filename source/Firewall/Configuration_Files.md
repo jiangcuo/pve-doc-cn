@@ -154,7 +154,8 @@ enable: <boolean>
 启用/禁用防火墙策略。
 
 ipfilter: <boolean>
-启用默认IP地址过滤器。相当于为每个网卡接口增加一个空白的ipfilter-net<id>地址集合。该IP地址集合隐式包含了一些默认控制，例如限制IPv6链路本地地址为网卡MAC生成的地址。对于容器，配置的IP地址将被隐式添加进去。
+启用默认IP地址过滤器。相当于为每个网卡接口增加一个空白的ipfilter-net<id>地址集合。
+该IP地址集合隐式包含了一些默认控制，例如限制IPv6链路本地地址为网卡MAC生成的地址。对于容器，配置的IP地址将被隐式添加进去。
 
 log_level_in: <alert | crit | debug | emerg | err | info | nolog | notice | warning>
 流入方向的防火墙日志级别。
