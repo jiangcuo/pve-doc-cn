@@ -37,3 +37,4 @@ QQ群：904754537
    Pct/index.rst
    SDN/index.rst
    Firewall/index.rst
+   User/index.rst
