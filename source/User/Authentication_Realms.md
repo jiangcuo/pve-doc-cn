@@ -111,9 +111,80 @@ pveum realm sync <realm>
 - 绑定用户（bind_dn）:
   
   指定用于查询用户和组的LDAP帐户。此帐户需要能够访问所有所需的条目。如果设置了，搜索将以账户进行；否则，搜索将匿名进行。用户必须是完整的LDAP格式的名称（DN），例如cn=admin，dc=example，dc=com
-- 群组名属性（group_name_attr）:
-- 用户类别（user_classes）:
-- 群组对象类（group_classes）:
-- 邮件属性:
-- 用户筛选（filter）:
-- 群组筛选器（group_filter）:
+
+- 群组名属性（group_name_attr）: 
+
+  组名称，只有符合user.cfg的通常字符限制的条目才会同步。组与附加到名称的-$realm域同步，以避免命名冲突。请确保同步不会覆盖手动创建的组
+
+- 用户类（user_classes）: 根据LDAP用户类筛选
+- 群组对象类（group_classes）: 根据LDAP群组类筛选
+- 用户筛选（filter）: 用于针对特定用户的更多筛选器选项。
+- 群组筛选器（group_filter）: 有关针对特定组的更多筛选器选项。
+
+
+筛选器允许您创建一组其他匹配条件，以缩小同步范围。有关可用 LDAP 筛选器类型及其用法的信息，请访问 ldap.com。
+
+**同步选项**
+
+- 范围：要同步的内容的范围。它可以是用户、组或一起。
+
+- 启用新用户： 如果设置，则新同步的用户将启用并可以登录。默认值为 true。
+
+- 完整：如果设置，同步将使用LDAP目录作为真值来源，覆盖在user.cfg中手动设置的信息，并在Proxmox VE上删除不在LDAP目录中的用户和组。如果未设置，则只会将新数据写入配置，不会删除陈旧用户
+
+
+- 清除： 如果设置，同步会在删除用户和组时删除所有相应的 ACL。仅在勾选了'完整'时生效。
+
+- 预览： 不会将任何数据写入配置。如果您想要查看哪些用户和组将同步到user.cfg，这将非常有用。在单击界面中的预览时设置。
+
+## 14.5.6. OpenID Connect
+
+主要的 OpenID Connect 配置选项包括：
+
+- 发行人URL：
+  
+  这是授权服务器的 URL。Proxmox使用OpenID Connect Discovery协议来自动配置更多详细信息。
+
+  虽然可以使用未加密的 http:// URL，但我们强烈建议使用加密 https://URL连接。
+
+- 领域: 取一个领域名
+
+- 客户端ID： OpenID 客户端ID
+
+- 客户端密钥：OpenID 客户端密钥
+
+- 自动创建用户：如果用户不存在，则自动创建用户。虽然身份验证是在 OpenID 服务器上完成的，但所有用户仍然需要 Proxmox VE 用户配置中的条目。您可以手动添加它们，也可以使用自动创建选项自动添加新用户。
+
+- 用户名声明： 用于生成唯一用户名（主题用户名或电子邮件）的 OpenID 声明。
+
+**用户名映射**
+
+OpenID Connect 规范定义了一个唯一属性 （`claim` ）叫做`subject`。默认情况下，我们使用此属性的值来生成Proxmox VE用户名，只需添加@和领域名称：`${subject}@${realm}`
+
+不幸的是，大多数OpenID服务器使用随机字符串作为`subject`，如DGH76OKH34BNG3245SB，因此典型的用户名看起来像DGH76OKH34BNG3245SB@yourrealm。虽然不会重复，但人类很难记住这些随机字符串，因此完全不可能将真实用户与此相关联。
+
+`username-claim `设置允许您使用其他属性进行用户名映射。如果 OpenID Connect 服务器提供该属性并保证其唯一性，则最好将其设置为`username`。
+
+另外一个选项就是使用`email`属性，这也能产生友好的用户名。同样，仅当服务器保证此属性的唯一时，才使用此设置。
+
+**示例**
+
+下面是使用 Google 创建 OpenID 域的示例。您需要将 --client-id 和 --client-key 替换为 Google OpenID 设置中的值。
+
+```
+pveum realm add myrealm1 --type openid --issuer-url  https://accounts.google.com --client-id XXXX --client-key YYYY --username-claim email
+```
+
+上述命令使用`--username-claim email`,这样Proxmox VE上的用户名就会像这样` example.user@google.com@myrealm1`
+
+Keycloak (https://www.keycloak.org/)是一个流行的开源身份和访问管理工具，它支持OpenID Connect。在以下示例中，您需要将 --issuer-url 和 --client-id 替换为您的信息
+
+`pveum realm add myrealm2 --type openid --issuer-url  https://your.server:8080/auth/realms/your-realm --client-id XXX --username-claim username`
+
+使用--username-claim username 允许Proxmox VE使用`username`作为用户名，像这样 example.user@myrealm2.
+
+注意！您需要确保不允许用户自己编辑用户名设置（在密钥保护服务器上）。
+
+
+
+
