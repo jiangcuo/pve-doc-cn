@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Promxox VE 中文手册 v7.1
+Proxmxox VE 中文手册 v7.1
 ===============================
 
 本手册是网友自发翻译，属于第三方性质，请知晓。
