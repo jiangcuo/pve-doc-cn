@@ -88,3 +88,31 @@ rp=mypve.example.com,origin=https://mypve.example.com:8006,id=mypve.example.com
 
 > 提示：建议改用 WebAuthn。
 
+
+如需使用U2F认证，服务器需要配置拥有合法https证书的域。还需要配置初始的AppID。
+
+- 注意： 修改AppID会导致已有U2F注册失效。
+
+
+具体可以通过/etc/pve/datacenter.cfg配置，示例如下：
+
+```
+u2f: appid=https://mypve.example.com:8006
+```
+
+对单一节点，AppID可以是浏览器中的Web UI地址，包括https://头以及端口信息。某些浏览器匹配AppID的规则会比其他浏览器更严格。
+
+对多节点集群，最好使用独立的https服务器提供appid.json文件，这种方式能兼容更多浏览器。如果所有节点都使用同一顶级域下的子域，可以使用TLD作为AppID，但要注意只有部分浏览器兼容这种做法。
+
+
+- 注意
+  
+  损坏的AppID通常会导致错误，但也会遇到不发生错误的情形，特别在使用Chromium和顶级域AppID访问节点时。有鉴于此，建议对多种浏览器测试有关配置，特别是修改AppID可能导致已有U2F注册失效的情况。
+
+
+## 14.6.9 激活用户U2F认证
+
+如需使用U2F认证，首先要打开TFA窗口的U2F选项卡，输入当前口令（root用户除外），点击注册按钮。如果服务器配置正确，浏览器也接受服务器提供的AppID，系统会弹出消息，提示用户点击U2F设备按钮（如使用的是YubiKey，设备按钮等将会以每秒两次的频率闪烁）。
+
+Firefox用户可能需要使用U2F令牌前通过about:config启用security.webauth.u2f。
+
