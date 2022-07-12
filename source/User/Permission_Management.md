@@ -110,4 +110,49 @@ pveum roleadd Sys_Power-only -privs "Sys.PowerMgmt Sys.Console"
 - 针对组赋权后，组内所有用户自动获得赋限。
 - 明确的赋权会覆盖从高层继承来的赋权。
 
-此外，特权分离的令牌不能
+此外，当一个用户不拥有某个路径的权限时，其特权分离的令牌也不会拥有此路径的权限。
+
+## 14.7.4. 资源池
+
+资源池主要用来将虚拟机和存储服务组织起来，并形成一个组。当对资源池赋予访问权限后（/pool/{poolid}），其中所有成员都会继承该权限，从而大大简化访问控制配置工作。
+
+
+## 14.7.5 我究竟需要哪些权限？
+在http://pve.proxmox.com/pve-docs/api-viewer/记录了每一个方法所需的API调用权限。
+
+所需的权限以列表形式表示，可以看作一个由访问权限检查函数构成的逻辑树。
+
+**`["and", <subtests>...] and ["or", <subtests>...]`**
+
+当前列表中的所有（and）或任意一个（or）权限需要被满足。
+
+`["perm", <path>, [ <privileges>...], <options>...]`
+
+该路径是一个模板参数（查看对象和路径一节）。访问目标路径时，列表中所有的（或任意一个，如果使用了any选项）权限需要被满足。如果指定了require-param选项，则需要满足指定的参数权限，除非API调用时标明该参数为可选的。
+
+`["userid-group", [ <privileges>...], <options>...]`
+
+调用方需要拥有/access/groups所列出的任意权限。此外，根据是否设置groups_param参数，还需要额外进行两个权限检查：
+
+- 设置了groups_param：API调用使用了不可选的组参数，调用方必须对参数引用的所有组拥有该组所列出的任意权限。
+- 未设置groups_param：通过userid参数传递的用户必须存在，并且是组的成员，而调用方拥有所列出的任意权限（通过`/access/groups/<group>`路径）。
+
+`["userid-param", "self"]`
+
+向API传递的userid参数值必须和申请进行操作的用户一致。（通常和or联合使用，以允许用户在没有权限的情况下在自身执行操作。）
+
+`["userid-param", "Realm.AllocateUser"]`
+
+用户需要对/access/realm/<realm>,拥有Realm.AllocateUser访问权。其中<realm>是用户通过userid参数传递的认证域。注意，用户不一定需要真的存在，因为用户ID是以<username>@<realm>形式传递的。
+`
+["perm-modify", <path>]`
+
+其中path是一个模板化参数（参见对象和路径一节）。用户需要拥有Permissions.Modify权限，或根据以下不同路径拥有相应权限：
+
+- /storage/...：需要额外拥有权限’Datastore.Allocate`
+- /vms/...：需要额外拥有权限’VM.Allocate`
+- /pool/...：需要额外拥有权限’Pool.Allocate`
+
+如果路径为空，需要对/access拥有Permission.Modify权限。
+
+

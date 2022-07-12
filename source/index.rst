@@ -38,3 +38,4 @@ QQ群：904754537
    SDN/index.rst
    Firewall/index.rst
    User/index.rst
+   High_Availability/index.rst
