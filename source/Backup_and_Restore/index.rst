@@ -19,13 +19,3 @@ Proxmox VE目前只支持全备份 – 包括虚拟机/容器的配置以及全�
 .. toctree::
    :maxdepth: 2
 
-   Backup_modes.md
-   Backup_File_Names.md
-   Backup_File_Compression.md
-   Backup_Encryption.md
-   Backup_Retention.md
-   Restore.md
-   Configuration.md
-   Hook_Scripts.md
-   File_Exclusions.md
-   Examples.md
