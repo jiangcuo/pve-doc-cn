@@ -39,3 +39,4 @@ QQ群：904754537
    Firewall/index.rst
    User/index.rst
    High_Availability/index.rst
+   Backup_and_Restore/index.rst
