@@ -24,8 +24,8 @@ I/O带宽上限（单位KB/秒）。
 
 `exclude-path : <string>`
 
-排除指定的文件/目录（shell全局）
-。
+排除指定的文件/目录（shell全局）。
+
 `ionice : <integer> (0 -8) (default = 7 )`
 
 设置CFQ ionice优先级。
