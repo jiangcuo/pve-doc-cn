@@ -25,7 +25,7 @@ deb http://security.debian.org/debian-security bullseye-security main contrib
 ```
 Proxmox VE提供了3个不同的软件仓库。
 
-## 3.1.2. PProxmox VE企业版软件源
+## 3.1.2. Proxmox VE企业版软件源
 Proxmox VE企业版软件源是默认的、稳定的、推荐使用的软件源，供订阅了Proxmox VE企业版的用户使用。该软件源包含了最稳定的软件包，适用于生产环境使用。软件源pve-enterprise默认是启用的。
 
 `/etc/apt/sources.list.d/pve-enterprise.list`文件
