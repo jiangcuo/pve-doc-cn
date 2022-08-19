@@ -171,13 +171,13 @@ pct set 100 –mp0 thin1:10,mp=/path/in/container
 
 - 警告:
   
-  出于安全性考虑，最好为绑定挂载创建专门的源目录路径，例如在/mnt/bindmounts下创建的目录。永远不要将/，/var或/etc等系统目录直接绑定挂载给容器使用，否则将可能带来极大的安全风险。
+  出于安全性考虑，最好为绑定挂载创建专门的源目录路径，例如在`/mnt/bindmounts`下创建的目录。永远不要将/，/var或/etc等系统目录直接绑定挂载给容器使用，否则将可能带来极大的安全风险。
 
 - 注意:
   
   绑定挂载的源路径必须没有任何链接文件。
 
-例如，要将主机目录/mnt/bindmounts/shared挂载到ID为100的容器中的/shared下，可在配置文件/etc/pve/lxc/100.conf中增加一行配置信息p0:/mnt/bindmounts/shared, mp=/shared。或者运行命令pct set 100 -mp0 /mnt/bindmounts/shared,mp=/shared也可以达到同样效果。
+例如，要将主机目录`/mnt/bindmounts/shared`挂载到ID为100的容器中的/shared下，可在配置文件/etc/pve/lxc/100.conf中增加一行配置信息`mp0:/mnt/bindmounts/shared, mp=/shared`。或者运行命令`pct set 100 -mp0 /mnt/bindmounts/shared,mp=/shared`也可以达到同样效果。
 
 ### 设备挂载
 
