@@ -21,6 +21,16 @@ deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian buster pve-no-subscripti
 echo  "blacklist nouveau" >>/etc/modprobe.d/disable-nouveau.conf
 echo  "options nouveau modeset=0" >>/etc/modprobe.d/disable-nouveau.conf
 ```
+
+*提示：如果当前主机不方便重启，可以解绑`nouveau`模块。*
+
+```
+cd /sys/bus/pci/drivers/nouveau
+ls  #查看你的PCIe设备号
+echo 0000:xxxxxxxxxxxxx > unbind  #将000xx替换成PCIe设备号
+```
+
+
 允许不安全中断
 ```
 echo "options vfio_iommu_type1 allow_unsafe_interrupts=1" >/etc/modprobe.d/iommu_unsafe_interrupts.conf
@@ -52,7 +62,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"
 
 安装`dkms`和`pve-headers`，用于安装驱动。`jq`和`uuid-runtime`用于配合`mdevctl`管理Nvidia vGPU设备。
 ```
-apt install dkms build-essential pve-headers dkms jq uuid-runtime -y
+apt install dkms build-essential pve-headers pve-headers-`uname -r` dkms jq uuid-runtime -y
 
 ```
 
