@@ -34,7 +34,7 @@ root@pve:~# mdevctl types
   nvidia-46
     Available instances: 20
     Device API: vfio-pci
-    Name: GRID P40-1Q     //最后面的字母前代表的是现存，1=1G,4=4G
+    Name: GRID P40-1Q     //最后面的字母前代表的是显存，1=1G,4=4G
     Description: num_heads=4, frl_config=60, framebuffer=1024M, max_resolution=5120x2880, max_instance=24
 
   ```
