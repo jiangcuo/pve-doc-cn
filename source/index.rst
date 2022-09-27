@@ -18,4 +18,4 @@ Proxmox VE Nvidia-vGPU 中文教程
    introduce.md
    env.md
    instdri.md
-   
+   configure.md

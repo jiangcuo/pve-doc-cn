@@ -21,7 +21,7 @@ Nvidia vGPU驱动和Proxmox VE平台的兼容性（在未使用patch得情况下
 
 https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/
 
-## 3.2 安装Nvidia vGPU驱动
+## 3.2. 安装Nvidia vGPU驱动
 
 这里以460.73.01为例
 
@@ -60,7 +60,7 @@ root@pve:~# dkms status
 nvidia, 460.73.01, 5.4.203-1-pve, x86_64: installed
 ```
 
-## 3.3 升级或者降级内核
+## 3.3. 升级或者降级内核
 
 升级或者降级内核务必参考上表的兼容性，否则可能会导致驱动和内核不兼容，使设备无法驱动。
 
