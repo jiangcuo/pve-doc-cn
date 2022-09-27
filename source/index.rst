@@ -19,3 +19,6 @@ Proxmox VE Nvidia-vGPU 中文教程
    env.md
    instdri.md
    configure.md
+   GustOS.md
+   remoteaccess.md
+   Licensing.md

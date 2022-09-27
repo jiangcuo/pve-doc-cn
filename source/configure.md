@@ -121,3 +121,4 @@ args: -uuid 00000000-0000-0000-0000-000000000121
 参考qemu-server=7.2-4中对nvidia vgpu的支持，修改源文件
 
 [https://git.proxmox.com/?p=qemu-server.git;a=commitdiff;h=bbf96e0f1ea0977c1b37e1ae3bbd9a9aed900c26](https://git.proxmox.com/?p=qemu-server.git;a=commitdiff;h=bbf96e0f1ea0977c1b37e1ae3bbd9a9aed900c26)
+

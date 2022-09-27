@@ -86,3 +86,17 @@ pve-headers-`uname -r`
 dkms install -m nvidia -v <YOUR_VERSION>
 ```
 
+## 3.4. 开启vGPU
+
+使用时间分片的GRID卡，安装好驱动之后，自动会出现mdev设备。
+
+然而，对于MIG的GRID卡，需要使用开启SRIOV
+
+参考:[https://pve.proxmox.com/wiki/NVIDIA_vGPU_on_Proxmox_VE_7.x](https://pve.proxmox.com/wiki/NVIDIA_vGPU_on_Proxmox_VE_7.x)
+
+
+## 3.5. 启用和禁用ECC内存
+
+某些GPU带ecc内存，有些GPU不带ecc内存，有些驱动支持ECC，有些驱动不支持ECC，所以请参考下文，合理安排。
+
+[https://docs.nvidia.com/grid/latest/grid-software-quick-start-guide/index.html#disabling-enabling-ecc-memory](https://docs.nvidia.com/grid/latest/grid-software-quick-start-guide/index.html#disabling-enabling-ecc-memory)
