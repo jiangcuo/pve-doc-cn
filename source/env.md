@@ -3,6 +3,8 @@
 ## 2.1 安装必要的软件源
 
 修改`/etc/apt/sources.list`使其如下：
+
+pve6
 ```
 #使用清华源
 deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
@@ -12,6 +14,18 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main con
 #清华pve源镜像
 deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian buster pve-no-subscription
 ```
+
+pve7
+```
+#使用清华源
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye/updates main contrib non-free
+#清华pve源镜像
+deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian bullseye pve-no-subscription
+```
+
 
 ## 2.2 调整相关内核参数
 

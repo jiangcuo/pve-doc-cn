@@ -77,7 +77,7 @@ apt install -y pve-kernel-5.11.22-5-pve pve-headers-5.11.22-5-pve
 若内核升级降级之前，忘记安装headers，可以在新内核启动之后，手动安装header
 
 ```
-pve-headers-`uname -r`
+apt install -y pve-headers-`uname -r`
 ```
 
 再执行dkms 安装
