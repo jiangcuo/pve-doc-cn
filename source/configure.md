@@ -13,7 +13,7 @@
 
 不同的vGPU配置使用不同的许可证进行授权。若无授权，则会阶梯降低性能。更多访问：[关于 NVIDIA vGPU 软件许可 - 参考](https://www.nvidia.com/content/Control-Panel-Help/vLatest/zh-cn/mergedProjects/nvlicCHS/About_GRID_Licensing_-_Reference.htm)
 
-## 4.2. 使用mdevtype查看vGPU配置
+## 4.2. 使用mdevctl查看vGPU配置
 
 `mdevctl`可以查看当前系统下的mdev设备。
 
@@ -45,7 +45,7 @@ root@pve:~# mdevctl types
 
 ![](https://foxi.buduanwang.vip/wp-content/uploads/2022/04/QQ20220428-141320.png)
 
-所以，要分配正确的设备给虚拟机，建议先使用`mdevtype`先对应，否则分配到了错误的vGPU，可能会导致无法安装驱动或者无法授权等等。
+所以，要分配正确的设备给虚拟机，建议先使用`mdevctl`先对应，否则分配到了错误的vGPU，可能会导致无法安装驱动或者无法授权等等。
 
 ## 4.3. vGPU分配规则
 
