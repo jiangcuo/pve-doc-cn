@@ -20,21 +20,21 @@
 下面是一个安装了P40的机器的`mdevctl`的输出:
 ```
 root@pve:~# mdevctl types
-0000:06:00.0          #此处是显卡设备号
-  nvidia-156          #mdev设备显示名称
-    Available instances: 0      #当前可用数量
+0000:06:00.0          //此处是显卡设备号
+  nvidia-156          //mdev设备显示名称
+    Available instances: 0      //当前可用数量
     Device API: vfio-pci 
-    Name: GRID P40-2B      #mdev设备友好名称.
-    Description: num_heads=4, frl_config=45, framebuffer=2048M, max_resolution=5120x2880, max_instance=12       #mdev设备描述
+    Name: GRID P40-2B      //mdev设备友好名称.
+    Description: num_heads=4, frl_config=45, framebuffer=2048M, max_resolution=5120x2880, max_instance=12       //mdev设备描述
   nvidia-283
     Available instances: 0
     Device API: vfio-pci
-    Name: GRID P40-4C      #C是vGPU配置类型,Q=vWS,C=vCS,B=vPC,A=vApps
+    Name: GRID P40-4C      //C是vGPU配置类型,Q=vWS,C=vCS,B=vPC,A=vApps
     Description: num_heads=1, frl_config=60, framebuffer=4096M, max_resolution=4096x2160, max_instance=6
   nvidia-46
     Available instances: 20
     Device API: vfio-pci
-    Name: GRID P40-1Q      #最后面的字母前代表的是现存，1=1G,4=4G
+    Name: GRID P40-1Q     //最后面的字母前代表的是现存，1=1G,4=4G
     Description: num_heads=4, frl_config=60, framebuffer=1024M, max_resolution=5120x2880, max_instance=24
 
   ```
