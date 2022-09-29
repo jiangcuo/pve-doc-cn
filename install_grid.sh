@@ -47,10 +47,12 @@ edit_grub(){
 pkg_install(){
     apt update 
     apt install dkms build-essential  pve-headers-`uname -r` -y
+    wget -P /tmp/ http://ftp.br.debian.org/debian/pool/main/m/mdevctl/mdevctl_0.81-1_all.deb
+    dpkg -i /tmp/mdevctl_0.81-1_all.deb
 }
 
 unbind_nouveau(){
-    for i in `ls /sys/bus/pci/drivers/nouveau |grep ":"`; 
+    for i in `ls /sys/bus/pci/drivers/nouveau/ |grep ":"`; 
        do
        echo $i > /sys/bus/pci/drivers/nouveau/unbind;
     done
