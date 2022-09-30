@@ -14,7 +14,7 @@ Nvidia vGPU驱动和Proxmox VE平台的兼容性（在未使用patch得情况下
 | pve6  | 5.4  | x     | x      | √        | √        | √        | √        |
 | pve6  | 5.11 | x     | x      | x        | x        | √        | √        |
 | pve7  | 5.13 | x     | x      | x        | x        | √        | √        |
-| pve7  | 5.15 | x     | x      | x        | x        | √        | √        |
+| pve7  | 5.15 | x     | x      | x        | x        | x        | √        |
 | pve7  | 5.19 | x     | x      | x        | x        | x        | x        |
 
 可以前往Nvidia官网下载驱动，也可以去下面下载。
