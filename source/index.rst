@@ -40,3 +40,4 @@ QQ群：904754537
    User/index.rst
    High_Availability/index.rst
    Backup_and_Restore/index.rst
+   important_service_daemons/index.rst
