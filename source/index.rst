@@ -43,3 +43,4 @@ QQ群：904754537
    important_service_daemons/index.rst
    Useful_Command_Line_Tools/index.rst
    Frequently_Asked_Questions/index.rst
+   Bibliography/index.md
