@@ -10,7 +10,7 @@
 
 指向其他节点的操作请求将自动发送到对应节点，也就是说你可以从Proxmox VE的一个节点管理整个集群。
 
-## 17.2.1基于主机的访问控制
+## 17.2.1 基于主机的访问控制
 可以为pveproxy配置类似于“apache2”的访问控制列表。相关访问控制列表保存在`/etc/default/pveproxy`中。例如：
 
 ```
@@ -51,7 +51,7 @@ CIPHERS="ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-C
 此外，可以设置客户端使用/etc/default/pveproxy中的指定密码（默认使用列表中第一个可以同时为client和pveproxy接受的）
 HONOR_CIPHER_ORDER=0
 
-## 17.2.3 Diffie-Hellman参数
+## 17.2.4 Diffie-Hellman参数
 
 可以在配置文件/etc/default/pveproxy中指定Diffie-Hellman参数。只需将参数DHPARAMS设置为包含DH参数的PEM文件路径即可。例如：
 
@@ -64,7 +64,7 @@ DHPARAMS="/path/to/dhparams.pem"
 注意
 DH参数仅在协商使用基于DH密钥交换算法的加密套件时有效。
 
-## 17.2.4其他HTTPS证书
+## 17.2.5 其他HTTPS证书
 
 Proxmox VE可以改用外部证书，或ACME证书。
 
@@ -72,7 +72,7 @@ Pveproxy默认使用证书`/etc/pve/local/pve-ssl.pem`和`/etc/pve/local/pve-ssl
 
 详细信息可以查看第3章Proxmox VE服务器管理。
 
-## 17.2.5压缩
+## 17.2.6 压缩
 
 在客户端支持的情况下，默认pveproxy使用gzip对HTTP流量进行压缩。可以在`/etc/default/pveproxy`中禁用该功能
 
@@ -90,6 +90,12 @@ SPICE（Simple Protocol for Independent Computing Environments）是一个开源
 
 该守护进程监听TCP 3128端口，并通过HTTP代理将SPICE客户端的连接请求转发给相应的Proxmox VE虚拟机。该进程以www-data权限运行，权限非常有限。
 
-## 17.4.1基于主机的访问控制
+## 17.4.1 基于主机的访问控制
 
-可以为spice配置类似于“apache2”的访问控制列表。相关访问控制列表保存在/etc/default/pveproxy中。详情可查看pveproxy文档。
+可以为spice配置类似于`apache2`的访问控制列表。相关访问控制列表保存在`/etc/default/pveproxy`中。详情可查看`pveproxy`文档。
+
+## 17.5. pvescheduler Proxmox VE 调度守护进程
+
+该守护进程负责根据计划启动作业，例如复制和备份。
+
+对于备份任务，它从文件 `/etc/pve/jobs.cfg`中获取配置信息。
