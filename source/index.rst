@@ -24,7 +24,7 @@ QQ群：904754537
 .. toctree::
    :maxdepth: 3
 
-   Introduction/index.rst
+   introduce/index.rst
    install/index.rst
    hostsysmgr/index.rst
    GUI/index.rst
