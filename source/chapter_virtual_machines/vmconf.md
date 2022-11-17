@@ -828,9 +828,6 @@ snaptime: 1457170803
 
     虚拟硬盘驱动器介质类型。
 
-  - model=`<model>`
-
-    虚拟硬盘的模型名，基于url编码格式，最大40字节。
 
   - replicate=`<boolean> `(default = 1)
 
@@ -1005,10 +1002,6 @@ snaptime: 1457170803
   - media=`<cdrom | disk> `(default = disk)
 
     虚拟硬盘驱动器介质类型。
-
-  - model=`<model>`
-
-    虚拟硬盘的模型名，基于url编码格式，最大40字节。
 
   - replicate=`<boolean> `(default = 1)
 
