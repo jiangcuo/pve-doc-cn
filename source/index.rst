@@ -12,4 +12,4 @@ Proxmox VE 安装手册 v7.3
 .. toctree::
    :maxdepth: 3
 
-   info/index.rst
+   install-requires.md
