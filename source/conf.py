@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Promxox VE 中文文档'
-copyright = '2022, bingsin'
-author = 'bingsin'
+project = 'Promxox VE 安装手册'
+copyright = '2022, lierfang'
+author = 'lierfang'
 
 # The full version, including alpha/beta/rc tags
-release = '7.1'
+release = '7.3'
 
 
 # -- General configuration ---------------------------------------------------
