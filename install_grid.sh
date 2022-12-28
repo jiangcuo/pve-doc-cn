@@ -3,15 +3,31 @@
 vgpu_unlock_rs_ver="v2.0.0"
 vgpu_unlock_rs_url="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/vgpu_unlock/rust/libvgpu_unlock_rs_$vgpu_unlock_rs_ver.so"
 vgpu_unlock_rs_conf="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/vgpu_unlock/vgpu_unlock.conf"
-kernel_version=$(uname -r|cut -d "." -f1,2)
-if [ "$kernel_version" > "5.15" ];then
-    echo "kernel $kernel_version is too high"
-    exit 0   
-elif [ "$kernel_version" > "5.3" ];then
-    nvidia_version="510.85.03"
-elif [ "$kernel_version" < "4.16" ];then
-    nvidia_version="470.103.02"
+main_kernelver=$(uname -r|cut -d "." -f1)
+minor=$(uname -r|cut -d "." -f2)
+if [ "$main_kernelver" -eq 5 ];then
+    if [ "$minor" -ge 16 ];then
+        echo "$main_kernelver.$minor is not support"
+        exit 0
+    elif [ "$minor" -ge 3 ];then
+        nvidia_version="510.85.03"
+    else
+        echo "$main_kernelver.$minor is not support"
+        exit 0
+    fi
+elif [ "$main_kernelver" -eq 4 ];then
+    if [ "$minor" -lt 16 ];then
+        nvidia_version="470.103.02"
+    else
+        echo "$main_kernelver.$minor is not support"
+        exit 0
+    fi
+else
+echo "$main_kernelver.$minor is not support"
+exit 0
 fi
+echo  your kernel $main_kernelver.$minor match $nvidia_version
+
 nvidia_pkg="NVIDIA-Linux-x86_64-$nvidia_version-vgpu-kvm.run"
 nvidia_url="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/$nvidia_pkg"
 
