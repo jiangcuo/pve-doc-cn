@@ -1,5 +1,6 @@
 #!/bin/bash
 #https://pve-doc-cn.readthedocs.io/zh_CN/pve-nvidia-vgpu/
+#bash install_grid.sh unlock to install vgpu_unlock
 vgpu_unlock_rs_ver="v2.0.0"
 vgpu_unlock_rs_url="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/vgpu_unlock/rust/libvgpu_unlock_rs_$vgpu_unlock_rs_ver.so"
 vgpu_unlock_rs_conf="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/vgpu_unlock/vgpu_unlock.conf"
@@ -99,6 +100,10 @@ vgpu_unlock(){
     cp /tmp/vgpu_unlock.conf /etc/systemd/system/nvidia-vgpud.service.d/
     cp /tmp/vgpu_unlock.conf /etc/systemd/system/nvidia-vgpu-mgr.service.d/
     systemctl daemon-reload
+    systemctl enable nvidia-vgpu-mgr.service 
+    systemctl enable nvidia-vgpud.service 
+    systemctl start nvidia-vgpud.service
+    systemctl start nvidia-vgpu-mgr.service
 }
 
 
