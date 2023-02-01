@@ -3,4 +3,4 @@
 # 前往Read the docs 查看
 https://pve-doc-cn.readthedocs.io/zh_CN/latest/
 
-佛系更新，争取在q3之前，完成全部翻译
+目前PVE7.2更新完毕。更新7.3的内容。
