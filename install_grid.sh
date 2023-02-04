@@ -11,7 +11,7 @@ if [ "$main_kernelver" -eq 5 ];then
         echo "$main_kernelver.$minor is not support"
         exit 0
     elif [ "$minor" -ge 3 ];then
-        nvidia_version="510.85.03"
+        nvidia_version="510.47.03"
     else
         echo "$main_kernelver.$minor is not support"
         exit 0
@@ -29,7 +29,7 @@ exit 0
 fi
 echo  your kernel $main_kernelver.$minor match $nvidia_version
 
-nvidia_pkg="NVIDIA-Linux-x86_64-$nvidia_version-vgpu-kvm.run"
+nvidia_pkg="NVIDIA-Linux-x86_64-$nvidia_version-vgpu-kvm"
 nvidia_url="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/$nvidia_pkg"
 
 grub_check(){
@@ -86,8 +86,14 @@ install_grid(){
     cd /tmp/
     curl -L -O $nvidia_url 
     sh $nvidia_pkg --dkms -z -s 
-    rm /tmp/$nvidia_pkg
-
+    rm /tmp/$nvidia_pkg.run
+}
+install_unlock(){
+    cd /tmp/
+    curl -L -O $nvidia_url.run
+    curl -L -O $nvidia_url.patch
+    sh $nvidia_pkg.run --apply-patch /tmp/NVIDIA-Linux-x86_64-$nvidia_pkg.patch
+    sh $nvidia_pkg-custom.run  --dkms -z -s 
 }
 
 vgpu_unlock(){
@@ -122,11 +128,13 @@ exit 0
 fi
 modiy_modules
 pkg_install
-install_grid
 
 if  [ "$1" = "unlock" ];then
+install_unlock
 vgpu_unlock
 echo "vgpu_unlock done"
+else
+install_grid
 fi
 
 
