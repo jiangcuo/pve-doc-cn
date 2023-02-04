@@ -85,15 +85,16 @@ pkg_install(){
 install_grid(){
     cd /tmp/
     curl -L -O $nvidia_url 
-    sh $nvidia_pkg --dkms -z -s 
+    sh $nvidia_pkg.run --dkms -z -s 
     rm /tmp/$nvidia_pkg.run
 }
 install_unlock(){
     cd /tmp/
     curl -L -O $nvidia_url.run
     curl -L -O $nvidia_url.patch
-    sh $nvidia_pkg.run --apply-patch /tmp/$nvidia_pkg.patch
+    sh $nvidia_pkg.run  --apply-patch /tmp/$nvidia_pkg.patch
     sh $nvidia_pkg-custom.run  --dkms -z -s 
+    rm $nvidia_pkg.run /tmp/$nvidia_pkg.patch $nvidia_pkg-custom.run
 }
 
 vgpu_unlock(){
