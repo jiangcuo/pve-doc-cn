@@ -92,7 +92,7 @@ install_unlock(){
     cd /tmp/
     curl -L -O $nvidia_url.run
     curl -L -O $nvidia_url.patch
-    sh $nvidia_pkg.run --apply-patch /tmp/NVIDIA-Linux-x86_64-$nvidia_pkg.patch
+    sh $nvidia_pkg.run --apply-patch /tmp/$nvidia_pkg.patch
     sh $nvidia_pkg-custom.run  --dkms -z -s 
 }
 
