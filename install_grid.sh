@@ -84,14 +84,14 @@ pkg_install(){
 
 install_grid(){
     curl -L -O $nvidia_url 
-    sh $nvidia_pkg.run --dkms -z -s 
+    sh $nvidia_pkg.run --dkms -q -s
     rm $nvidia_pkg.run
 }
 install_unlock(){
     curl -L -O $nvidia_url.run
     curl -L -O $nvidia_url.patch
     sh $nvidia_pkg.run  --apply-patch $nvidia_pkg.patch
-    sh $nvidia_pkg-custom.run  --dkms -z -s 
+    sh $nvidia_pkg-custom.run  --dkms -q -s
     rm $nvidia_pkg.run $nvidia_pkg.patch $nvidia_pkg-custom.run
 }
 
