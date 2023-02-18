@@ -121,8 +121,8 @@ modiy_modules
 pkg_install
 
 if  [ "$1" = "unlock" ];then
-install_unlock
 install_grid
+vgpu_unlock
 echo "vgpu_unlock done"
 else
 install_grid
