@@ -87,12 +87,6 @@ install_grid(){
     sh $nvidia_pkg --dkms -q -s
     rm $nvidia_pkg
 }
-install_unlock(){
-    curl -L -O $nvidia_url
-    sh $nvidia_pkg --dkms -q -s
-    rm $nvidia_pkg
-}
-
 vgpu_unlock(){
     mkdir /etc/systemd/system/nvidia-vgpud.service.d/
     mkdir /etc/systemd/system/nvidia-vgpu-mgr.service.d/
@@ -128,7 +122,7 @@ pkg_install
 
 if  [ "$1" = "unlock" ];then
 install_unlock
-vgpu_unlock
+install_grid
 echo "vgpu_unlock done"
 else
 install_grid
