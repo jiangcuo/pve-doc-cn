@@ -1,9 +1,9 @@
 #!/bin/bash
 #https://pve-doc-cn.readthedocs.io/zh_CN/pve-nvidia-vgpu/
 #bash install_grid.sh unlock to install vgpu_unlock
-vgpu_unlock_rs_ver="v2.0.0"
-vgpu_unlock_rs_url="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/vgpu_unlock/rust/libvgpu_unlock_rs_$vgpu_unlock_rs_ver.so"
-vgpu_unlock_rs_conf="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/vgpu_unlock/vgpu_unlock.conf"
+vgpu_unlock_rs_ver="v2.3.1"
+vgpu_unlock_rs_url="https://mirrors.apqa.cn/d/vGPU/vgpu_unlock/rust/libvgpu_unlock_rs_$vgpu_unlock_rs_ver.so"
+vgpu_unlock_rs_conf="https://mirrors.apqa.cn/d/vGPU/vgpu_unlock/vgpu_unlock.conf"
 main_kernelver=$(uname -r|cut -d "." -f1)
 minor=$(uname -r|cut -d "." -f2)
 if [ "$main_kernelver" -eq 5 ];then
@@ -29,8 +29,8 @@ exit 0
 fi
 echo  your kernel $main_kernelver.$minor match $nvidia_version
 
-nvidia_pkg="NVIDIA-Linux-x86_64-$nvidia_version-vgpu-kvm"
-nvidia_url="https://foxi.buduanwang.vip/pan/foxi/Virtualization/vGPU/$nvidia_pkg"
+nvidia_pkg="NVIDIA-Linux-x86_64-$nvidia_version-vgpu-kvm-custom.run"
+nvidia_url="https://mirrors.apqa.cn/d/vGPU/vgpu_unlock/drivers/$nvidia_pkg"
 
 grub_check(){
     if [ -e /etc/kernel/proxmox-boot-uuids ]
@@ -84,15 +84,13 @@ pkg_install(){
 
 install_grid(){
     curl -L -O $nvidia_url 
-    sh $nvidia_pkg.run --dkms -q -s
-    rm $nvidia_pkg.run
+    sh $nvidia_pkg --dkms -q -s
+    rm $nvidia_pkg
 }
 install_unlock(){
-    curl -L -O $nvidia_url.run
-    curl -L -O $nvidia_url.patch
-    sh $nvidia_pkg.run  --apply-patch $nvidia_pkg.patch
-    sh $nvidia_pkg-custom.run  --dkms -q -s
-    rm $nvidia_pkg.run $nvidia_pkg.patch $nvidia_pkg-custom.run
+    curl -L -O $nvidia_url
+    sh $nvidia_pkg --dkms -q -s
+    rm $nvidia_pkg
 }
 
 vgpu_unlock(){
