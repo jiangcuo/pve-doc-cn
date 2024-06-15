@@ -114,7 +114,7 @@ options vfio_iommu_type1 allow_unsafe_interrupts=1
 其中1234:5678和4321:8765是厂商和设备IDs，具体可以执行以下命令查看获取
 
 ```
-lcpci -nn
+lspci -nn
 ```
 
 #### 2.对主机屏蔽驱动以确保可供直通使用
@@ -132,7 +132,7 @@ blacklist DRIVERNAME
 为了确认上面的配置生效，你可以在重启之后，执行下面命令
 
 ```
-    lspci -nnk
+lspci -nnk
 ```
 在输出的结果中，找到设备信息，如果有下面字段：
 
@@ -176,7 +176,7 @@ Kernel driver in use: vfio-pci
 下面的例子通过PCIe直通主GPU设备：
 
 ```
-    qm set VMID -hostpci0 02:00,pcie=on,x-vga=on
+qm set VMID -hostpci0 02:00,pcie=on,x-vga=on
 ```
 
 #### 其他注意事项
