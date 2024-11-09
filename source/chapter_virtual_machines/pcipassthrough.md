@@ -114,7 +114,7 @@ options vfio_iommu_type1 allow_unsafe_interrupts=1
 其中1234:5678和4321:8765是厂商和设备IDs，具体可以执行以下命令查看获取
 
 ```
-lcpci -nn
+lspci -nn
 ```
 
 #### 2.对主机屏蔽驱动以确保可供直通使用
