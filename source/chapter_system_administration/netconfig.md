@@ -31,7 +31,7 @@ Proxmox VE 不会将更改直接写入 `/etc/network/interfaces·。相反，我
 - 网卡：eth[N]，其中0 ≤ N（eth0，eth1， …)。Proxmox VE 5.0之前的版本采用该命名规范。从旧版Proxmox VE升级至5.0以上版本时，网卡命名将保持不变，继续沿用该规范。
 - 网桥：vmbr[N]，其中0 ≤ N ≤ 4094（vmbr0 - vmbr4094）
 - 网口组合：bond[N]，其中0 ≤ N（bond0，bond1， …)
-- VLANs：只需要将VLAN编号附加到网络设备名称后面，并用“.”分隔（eht0.50，bond1.30）
+- VLANs：只需要将VLAN编号附加到网络设备名称后面，并用“.”分隔（eth0.50，bond1.30）
 
 采用命名规范将网络设备名称和网络设备类型关联起来，能够大大降低网络故障排查难度。
 
